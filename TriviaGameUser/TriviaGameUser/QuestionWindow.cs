@@ -26,6 +26,7 @@ namespace TriviaGameUser
         int userAnswer;
         int gameScore;
         int questionScore;
+        string leaderboard;
 
         int questionNumber;
         string question;
@@ -109,7 +110,7 @@ namespace TriviaGameUser
                 {
                     sendGameScore();
                     //end game
-                    lbl_Question.Text = "your score: " + gameScore.ToString();
+                    lbl_Question.Text = "your score: " + gameScore.ToString() + leaderboard;
                 }
             }
         }
@@ -145,7 +146,7 @@ namespace TriviaGameUser
         {
             output.WriteLine("GameDone");
             output.WriteLine(gameScore);
-            input.ReadLine();
+            leaderboard = input.ReadLine();
         }
 
         private void on_Timer_Event(Object source, ElapsedEventArgs e)
