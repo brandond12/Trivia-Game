@@ -16,7 +16,7 @@ namespace TriviaGameUser
             Application.SetCompatibleTextRenderingDefault(false);
             ProgramStart gameStart = new ProgramStart();
             Application.Run(gameStart);
-            Application.Run(new QuestionWindow(gameStart.getUserName(), gameStart.getPipeName()));
+            Application.Run(new QuestionWindow(gameStart.getUserName(),gameStart.getServerName(), gameStart.getPipeName()));
         }
     }
 }

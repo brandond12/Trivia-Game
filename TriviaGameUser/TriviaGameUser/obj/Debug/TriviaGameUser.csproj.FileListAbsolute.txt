@@ -7,3 +7,4 @@ F:\Repository\Trivia-Game\trunk\TriviaGameUser\TriviaGameUser\obj\Debug\TriviaGa
 F:\Repository\Trivia-Game\trunk\TriviaGameUser\TriviaGameUser\obj\Debug\TriviaGameUser.exe
 F:\Repository\Trivia-Game\trunk\TriviaGameUser\TriviaGameUser\obj\Debug\TriviaGameUser.pdb
 F:\Repository\Trivia-Game\trunk\TriviaGameUser\TriviaGameUser\obj\Debug\TriviaGameUser.ProgramStart.resources
+F:\Repository\Trivia-Game\trunk\TriviaGameUser\TriviaGameUser\bin\Debug\TriviaGameUser.exe.config

@@ -30,10 +30,10 @@
         {
             this.lbl_Question = new System.Windows.Forms.Label();
             this.GrpBx_AnswerSelection = new System.Windows.Forms.GroupBox();
-            this.rad_Answer1 = new System.Windows.Forms.RadioButton();
-            this.rad_Answer2 = new System.Windows.Forms.RadioButton();
-            this.rad_Answer3 = new System.Windows.Forms.RadioButton();
             this.rad_Answer4 = new System.Windows.Forms.RadioButton();
+            this.rad_Answer3 = new System.Windows.Forms.RadioButton();
+            this.rad_Answer2 = new System.Windows.Forms.RadioButton();
+            this.rad_Answer1 = new System.Windows.Forms.RadioButton();
             this.lbl_answer1 = new System.Windows.Forms.Label();
             this.lbl_answer2 = new System.Windows.Forms.Label();
             this.lbl_answer3 = new System.Windows.Forms.Label();
@@ -63,25 +63,15 @@
             this.GrpBx_AnswerSelection.TabIndex = 1;
             this.GrpBx_AnswerSelection.TabStop = false;
             // 
-            // rad_Answer1
+            // rad_Answer4
             // 
-            this.rad_Answer1.AutoSize = true;
-            this.rad_Answer1.Location = new System.Drawing.Point(22, 28);
-            this.rad_Answer1.Name = "rad_Answer1";
-            this.rad_Answer1.Size = new System.Drawing.Size(14, 13);
-            this.rad_Answer1.TabIndex = 0;
-            this.rad_Answer1.TabStop = true;
-            this.rad_Answer1.UseVisualStyleBackColor = true;
-            // 
-            // rad_Answer2
-            // 
-            this.rad_Answer2.AutoSize = true;
-            this.rad_Answer2.Location = new System.Drawing.Point(22, 72);
-            this.rad_Answer2.Name = "rad_Answer2";
-            this.rad_Answer2.Size = new System.Drawing.Size(14, 13);
-            this.rad_Answer2.TabIndex = 1;
-            this.rad_Answer2.TabStop = true;
-            this.rad_Answer2.UseVisualStyleBackColor = true;
+            this.rad_Answer4.AutoSize = true;
+            this.rad_Answer4.Location = new System.Drawing.Point(22, 163);
+            this.rad_Answer4.Name = "rad_Answer4";
+            this.rad_Answer4.Size = new System.Drawing.Size(14, 13);
+            this.rad_Answer4.TabIndex = 3;
+            this.rad_Answer4.TabStop = true;
+            this.rad_Answer4.UseVisualStyleBackColor = true;
             // 
             // rad_Answer3
             // 
@@ -93,20 +83,30 @@
             this.rad_Answer3.TabStop = true;
             this.rad_Answer3.UseVisualStyleBackColor = true;
             // 
-            // rad_Answer4
+            // rad_Answer2
             // 
-            this.rad_Answer4.AutoSize = true;
-            this.rad_Answer4.Location = new System.Drawing.Point(22, 163);
-            this.rad_Answer4.Name = "rad_Answer4";
-            this.rad_Answer4.Size = new System.Drawing.Size(14, 13);
-            this.rad_Answer4.TabIndex = 3;
-            this.rad_Answer4.TabStop = true;
-            this.rad_Answer4.UseVisualStyleBackColor = true;
+            this.rad_Answer2.AutoSize = true;
+            this.rad_Answer2.Location = new System.Drawing.Point(22, 72);
+            this.rad_Answer2.Name = "rad_Answer2";
+            this.rad_Answer2.Size = new System.Drawing.Size(14, 13);
+            this.rad_Answer2.TabIndex = 1;
+            this.rad_Answer2.TabStop = true;
+            this.rad_Answer2.UseVisualStyleBackColor = true;
+            // 
+            // rad_Answer1
+            // 
+            this.rad_Answer1.AutoSize = true;
+            this.rad_Answer1.Location = new System.Drawing.Point(22, 28);
+            this.rad_Answer1.Name = "rad_Answer1";
+            this.rad_Answer1.Size = new System.Drawing.Size(14, 13);
+            this.rad_Answer1.TabIndex = 0;
+            this.rad_Answer1.TabStop = true;
+            this.rad_Answer1.UseVisualStyleBackColor = true;
             // 
             // lbl_answer1
             // 
             this.lbl_answer1.AutoSize = true;
-            this.lbl_answer1.Location = new System.Drawing.Point(101, 72);
+            this.lbl_answer1.Location = new System.Drawing.Point(90, 72);
             this.lbl_answer1.Name = "lbl_answer1";
             this.lbl_answer1.Size = new System.Drawing.Size(51, 13);
             this.lbl_answer1.TabIndex = 2;
@@ -115,7 +115,7 @@
             // lbl_answer2
             // 
             this.lbl_answer2.AutoSize = true;
-            this.lbl_answer2.Location = new System.Drawing.Point(101, 116);
+            this.lbl_answer2.Location = new System.Drawing.Point(90, 116);
             this.lbl_answer2.Name = "lbl_answer2";
             this.lbl_answer2.Size = new System.Drawing.Size(51, 13);
             this.lbl_answer2.TabIndex = 3;
@@ -124,7 +124,7 @@
             // lbl_answer3
             // 
             this.lbl_answer3.AutoSize = true;
-            this.lbl_answer3.Location = new System.Drawing.Point(101, 161);
+            this.lbl_answer3.Location = new System.Drawing.Point(90, 161);
             this.lbl_answer3.Name = "lbl_answer3";
             this.lbl_answer3.Size = new System.Drawing.Size(51, 13);
             this.lbl_answer3.TabIndex = 4;
@@ -133,7 +133,7 @@
             // lbl_answer4
             // 
             this.lbl_answer4.AutoSize = true;
-            this.lbl_answer4.Location = new System.Drawing.Point(101, 207);
+            this.lbl_answer4.Location = new System.Drawing.Point(90, 207);
             this.lbl_answer4.Name = "lbl_answer4";
             this.lbl_answer4.Size = new System.Drawing.Size(51, 13);
             this.lbl_answer4.TabIndex = 5;
