@@ -1,0 +1,9 @@
+F:\Repository\Trivia-Game\trunk\TriviaGameAdmin\TriviaGameAdmin\bin\Debug\TriviaGameAdmin.exe
+F:\Repository\Trivia-Game\trunk\TriviaGameAdmin\TriviaGameAdmin\bin\Debug\TriviaGameAdmin.pdb
+F:\Repository\Trivia-Game\trunk\TriviaGameAdmin\TriviaGameAdmin\obj\Debug\TriviaGameAdmin.csprojResolveAssemblyReference.cache
+F:\Repository\Trivia-Game\trunk\TriviaGameAdmin\TriviaGameAdmin\obj\Debug\TriviaGameAdmin.ProgramStart.resources
+F:\Repository\Trivia-Game\trunk\TriviaGameAdmin\TriviaGameAdmin\obj\Debug\TriviaGameAdmin.Properties.Resources.resources
+F:\Repository\Trivia-Game\trunk\TriviaGameAdmin\TriviaGameAdmin\obj\Debug\TriviaGameAdmin.csproj.GenerateResource.Cache
+F:\Repository\Trivia-Game\trunk\TriviaGameAdmin\TriviaGameAdmin\obj\Debug\TriviaGameAdmin.exe
+F:\Repository\Trivia-Game\trunk\TriviaGameAdmin\TriviaGameAdmin\obj\Debug\TriviaGameAdmin.pdb
+F:\Repository\Trivia-Game\trunk\TriviaGameAdmin\TriviaGameAdmin\obj\Debug\TriviaGameAdmin.MainWindow.resources
