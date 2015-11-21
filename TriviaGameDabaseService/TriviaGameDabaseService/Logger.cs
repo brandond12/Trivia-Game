@@ -12,12 +12,12 @@ namespace TriviaGameDabaseService
         public static void Log(string message)
         {
             EventLog serviceEventLog = new EventLog();
-            if (!EventLog.SourceExists("MyEventSource"))
+            if (!EventLog.SourceExists("TriviaGame-Service"))
             {
-                EventLog.CreateEventSource("MyEventSource", "MyEventLog");
+                EventLog.CreateEventSource("TriviaGame-Service", "TriviaGameEvents");
             }
-            serviceEventLog.Source = "MyEventSource";
-            serviceEventLog.Log = "MyEventLog";
+            serviceEventLog.Source = "TriviaGame-Service";
+            serviceEventLog.Log = "TriviaGameEvents";
             serviceEventLog.WriteEntry(message);
         }
     }

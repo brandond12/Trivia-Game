@@ -25,7 +25,6 @@ namespace TriviaGameDabaseService
         {
             Logger.Log("Started Service");
             t.Start();
-            Logger.Log("Thread isAlive: " + t.IsAlive.ToString());
         }
 
         protected override void OnStop()
@@ -49,13 +48,11 @@ namespace TriviaGameDabaseService
 
         private void listener()
         {
-            Logger.Log("service thread started running");
             while(!Done)
             {
                 Logger.Log("service running");
-                Thread.Sleep(1);
+                Thread.Sleep(1000);
             }
-            Logger.Log("service thread stoped running");
         }
     }
 }
