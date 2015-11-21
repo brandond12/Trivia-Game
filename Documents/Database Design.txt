@@ -1,0 +1,22 @@
+Tables:
+Users
+UserGames
+UserAnswers
+TestQuestions
+TestAnswer
+
+Data Members:
+Users:
+	Name, isActive
+
+UserGames:
+	gameNumber, userName, gameScore
+
+UserAnswer:
+	userGame, gameQuestion, userAnswer, answerScore
+
+TestQuestions:
+	QuestionNumber, Question
+
+TestAnswers:
+	Question, Answer, isCorrect 
