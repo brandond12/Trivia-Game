@@ -36,7 +36,7 @@ Name VARCHAR(50),
 GameQuestion INT,
 UserAnswer VARCHAR(100),
 AnswerScore INT,
-PRIMARY KEY (GameNumber, Name),
+PRIMARY KEY (GameNumber, Name, GameQuestion),
 FOREIGN KEY (GameNumber, Name) REFERENCES UserGames(GameNumber, Name),
 FOREIGN KEY (GameQuestion) REFERENCES TestQuestions(QuestionNumber),
 FOREIGN KEY (UserAnswer) REFERENCES TestAnswers(Answer)
