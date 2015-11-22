@@ -201,7 +201,7 @@ namespace TriviaGameDabaseService
             {
                 if (sqlConnection.State == ConnectionState.Open)
                 {
-                    String updateScript = "UPDATE UserGames SET GameScore=" + gameScore + " WHERE Name='" + name + "';";
+                    String updateScript = "UPDATE UserGames SET GameScore=" + gameScore + " WHERE Name='" + name + "' AND GameNumber=" + gameNumber + ";";
 
                     MySqlCommand myCommand = new MySqlCommand(updateScript, sqlConnection);
                     myCommand.ExecuteNonQuery();
