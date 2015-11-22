@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Text;
 using System.Data;
 using MySql.Data.MySqlClient;
+using Excel = Microsoft.Office.Interop.Excel;
+using System.Reflection;
 
 namespace TriviaGameDabaseService
 {
@@ -62,8 +64,8 @@ namespace TriviaGameDabaseService
             {
                 if (sqlConnection.State == ConnectionState.Open)
                 {
-                    String questionScript = "SELECT Question FROM TestQuestions WHERE QuestionNumber=" + questionNumber + ";";
-                    MySqlCommand myCommand = new MySqlCommand(questionScript, sqlConnection);
+                    String questionQuery = "SELECT Question FROM TestQuestions WHERE QuestionNumber=" + questionNumber + ";";
+                    MySqlCommand myCommand = new MySqlCommand(questionQuery, sqlConnection);
 
                     question = Convert.ToString(myCommand.ExecuteScalar());
                 }
@@ -88,8 +90,8 @@ namespace TriviaGameDabaseService
             {
                 if (sqlConnection.State == ConnectionState.Open)
                 {
-                    String answersScript = "SELECT Answer From TestAnswers WHERE QuestionNumber=" + questionNumber + ";";
-                    MySqlCommand myCommand = new MySqlCommand(answersScript, sqlConnection);
+                    String answersQuery = "SELECT Answer From TestAnswers WHERE QuestionNumber=" + questionNumber + ";";
+                    MySqlCommand myCommand = new MySqlCommand(answersQuery, sqlConnection);
 
                     correctAnswer = this.GetCorrectAnswer(questionNumber);
 
@@ -124,9 +126,9 @@ namespace TriviaGameDabaseService
             {
                 if (sqlConnection.State == ConnectionState.Open)
                 {
-                    String nameScript = "INSERT INTO Users (Name, IsActive) VALUES ('" + name + "', TRUE);";
+                    String nameQuery = "INSERT INTO Users (Name, IsActive) VALUES ('" + name + "', TRUE);";
 
-                    MySqlCommand myCommand = new MySqlCommand(nameScript, sqlConnection);
+                    MySqlCommand myCommand = new MySqlCommand(nameQuery, sqlConnection);
                     myCommand.ExecuteNonQuery();
 
                     wasNameStored = true;
@@ -150,9 +152,9 @@ namespace TriviaGameDabaseService
             {
                 if (sqlConnection.State == ConnectionState.Open)
                 {
-                    String leaderboardScript = "INSERT INTO UserGames (GameNumber, Name, GameScore) VALUES (" + gameNumber + ", '" + userName + "', 0);";
+                    String leaderboardQuery = "INSERT INTO UserGames (GameNumber, Name, GameScore) VALUES (" + gameNumber + ", '" + userName + "', 0);";
 
-                    MySqlCommand myCommand = new MySqlCommand(leaderboardScript, sqlConnection);
+                    MySqlCommand myCommand = new MySqlCommand(leaderboardQuery, sqlConnection);
                     myCommand.ExecuteNonQuery();
 
                     wasUserEntered = true;
@@ -175,10 +177,10 @@ namespace TriviaGameDabaseService
             {
                 if (sqlConnection.State == ConnectionState.Open)
                 {
-                    String answerScript = "INSERT INTO UserAnswer (GameNumber, Name, GameQuestion, UserAnswer, AnswerScore)"
+                    String answerQuery = "INSERT INTO UserAnswer (GameNumber, Name, GameQuestion, UserAnswer, AnswerScore)"
                     + "VALUES (" + gameNumber + ", '" + userName + "', " + gameQuestion + ", '" + userAnswer + "', " + answerScore + ");";
 
-                    MySqlCommand myCommand = new MySqlCommand(answerScript, sqlConnection);
+                    MySqlCommand myCommand = new MySqlCommand(answerQuery, sqlConnection);
                     myCommand.ExecuteNonQuery();
 
                     wasAnswerStored = true;
@@ -201,9 +203,9 @@ namespace TriviaGameDabaseService
             {
                 if (sqlConnection.State == ConnectionState.Open)
                 {
-                    String updateScript = "UPDATE UserGames SET GameScore=" + gameScore + " WHERE Name='" + name + "' AND GameNumber=" + gameNumber + ";";
+                    String updateQuery = "UPDATE UserGames SET GameScore=" + gameScore + " WHERE Name='" + name + "' AND GameNumber=" + gameNumber + ";";
 
-                    MySqlCommand myCommand = new MySqlCommand(updateScript, sqlConnection);
+                    MySqlCommand myCommand = new MySqlCommand(updateQuery, sqlConnection);
                     myCommand.ExecuteNonQuery();
 
                     isLeaderboardUpdated = true;
@@ -226,8 +228,8 @@ namespace TriviaGameDabaseService
             {
                 if (sqlConnection.State == ConnectionState.Open)
                 {
-                    String leaderboardScript = "SELECT Name, GameScore FROM UserGames WHERE GameNumber=" + gameNumber + " ORDER BY GameScore DESC;";
-                    MySqlCommand myCommand = new MySqlCommand(leaderboardScript, sqlConnection);
+                    String leaderboardQuery = "SELECT Name, GameScore FROM UserGames WHERE GameNumber=" + gameNumber + " ORDER BY GameScore DESC;";
+                    MySqlCommand myCommand = new MySqlCommand(leaderboardQuery, sqlConnection);
 
                     MySqlDataReader readData = myCommand.ExecuteReader();
 
@@ -256,9 +258,9 @@ namespace TriviaGameDabaseService
             {
                 if (sqlConnection.State == ConnectionState.Open)
                 {
-                    String inactiveScript = "UPDATE Users SET IsActive=FALSE WHERE Name='" + name + "';";
+                    String inactiveQuery = "UPDATE Users SET IsActive=FALSE WHERE Name='" + name + "';";
 
-                    MySqlCommand myCommand = new MySqlCommand(inactiveScript, sqlConnection);
+                    MySqlCommand myCommand = new MySqlCommand(inactiveQuery, sqlConnection);
                     myCommand.ExecuteNonQuery();
 
                     isUserNotActive = true;
@@ -282,8 +284,8 @@ namespace TriviaGameDabaseService
             {
                 if (sqlConnection.State == ConnectionState.Open)
                 {
-                    String nameScript = "SELECT count(*) FROM Users WHERE Name='" + name + "';";
-                    MySqlCommand myCommand = new MySqlCommand(nameScript, sqlConnection);
+                    String nameQuery = "SELECT count(*) FROM Users WHERE Name='" + name + "';";
+                    MySqlCommand myCommand = new MySqlCommand(nameQuery, sqlConnection);
 
                     nameCount = Convert.ToInt32(myCommand.ExecuteScalar());
 
@@ -314,8 +316,8 @@ namespace TriviaGameDabaseService
             {
                 if (sqlConnection.State == ConnectionState.Open)
                 {
-                    String answerScript = "SELECT Answer FROM TestAnswers WHERE QuestionNumber=" + questionNumber + " AND IsCorrect=TRUE;";
-                    MySqlCommand myCommand = new MySqlCommand(answerScript, sqlConnection);
+                    String answerQuery = "SELECT Answer FROM TestAnswers WHERE QuestionNumber=" + questionNumber + " AND IsCorrect=TRUE;";
+                    MySqlCommand myCommand = new MySqlCommand(answerQuery, sqlConnection);
 
                     correctAnswer = Convert.ToString(myCommand.ExecuteScalar());
                 }
@@ -328,10 +330,71 @@ namespace TriviaGameDabaseService
         }
 
         // edit questions and answers
+        public String AdminQueryDatabase(String adminQuery)
+        {
+            String response = "";
+            int columnNumber = 0;
 
+            try
+            {
+                if (sqlConnection.State == ConnectionState.Open)
+                {
+                    MySqlCommand myCommand = new MySqlCommand(adminQuery, sqlConnection);
+                    MySqlDataReader readData = myCommand.ExecuteReader();
 
-        // see current status of participants
+                    for (int columnCount = 0; columnCount < readData.FieldCount; columnCount++)
+                    {
+                        columnNumber++;
+                    }
 
+                    while (readData.Read())
+                    {
+                        for (int columnCount = 0; columnCount < columnNumber; columnCount++)
+                        {
+                            response += readData.GetString(columnCount);
+                            response += " ";
+                        }
+                        response += "\n";
+                    }
+                    readData.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Exception: " + ex.Message);
+            }
+            return response;
+        }
 
+        // see current status of participants ??
+        public String GetCurrentStatus(int gameNumber)
+        {
+            String currentScores = "";
+
+            try
+            {
+                if (sqlConnection.State == ConnectionState.Open)
+                {
+                    String currentScoreQuery = "SELECT ug.Name, SUM(AnswerScore) as 'Score' FROM UserAnswer ua INNER JOIN UserGames ug" +
+                    " ON ua.Name = ug.Name INNER JOIN Users u ON ug.Name = u.Name WHERE ug.GameNumber=" + gameNumber + " AND IsActive=TRUE" +
+                    " GROUP BY Name ORDER BY SUM(AnswerScore) DESC;";
+                    MySqlCommand myCommand = new MySqlCommand(currentScoreQuery, sqlConnection);
+
+                    MySqlDataReader readData = myCommand.ExecuteReader();
+
+                    while (readData.Read())
+                    {
+                        currentScores += readData.GetString(0) + " " + readData.GetString(1) + "\n";
+                    }
+                    readData.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Exception: " + ex.Message);
+                currentScores = "";
+            }
+            return currentScores;
+        }
     }
 }
