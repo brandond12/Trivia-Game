@@ -34,9 +34,9 @@ namespace TriviaGameDabaseService
                 sqlConnection.Open();
                 Console.WriteLine("Connection to database succeeded.");
             }
-            catch (MySqlException e)
+            catch (Exception ex)
             {
-                Console.WriteLine("ERROR: " + e.ToString());
+                Console.WriteLine("Exception: " + ex.Message);
             }
         }
 
@@ -47,9 +47,9 @@ namespace TriviaGameDabaseService
                 sqlConnection.Close();
                 Console.WriteLine("Closing of the database connection succeeded.");
             }
-            catch (MySqlException e)
+            catch (Exception ex)
             {
-                Console.WriteLine("ERROR: " + e.ToString());
+                Console.WriteLine("Exception: " + ex.Message);
             }
         }
 
@@ -65,17 +65,12 @@ namespace TriviaGameDabaseService
                     String questionScript = "SELECT Question FROM TestQuestions WHERE QuestionNumber=" + questionNumber + ";";
                     MySqlCommand myCommand = new MySqlCommand(questionScript, sqlConnection);
 
-                    MySqlDataReader readData = myCommand.ExecuteReader();
-                    while (readData.Read())
-                    {
-                        question = (String)(readData["Question"]);
-                    }
-                    readData.Close();
+                    question = Convert.ToString(myCommand.ExecuteScalar());
                 }
             }
-            catch (MySqlException e)
+            catch (Exception ex)
             {
-                Console.WriteLine("ERROR: " + e.ToString());
+                Console.WriteLine("Exception: " + ex.Message);
             }
             return question;
         }
@@ -103,9 +98,9 @@ namespace TriviaGameDabaseService
                     readData.Close();
                 }
             }
-            catch (MySqlException e)
+            catch (Exception ex)
             {
-                Console.WriteLine("ERROR: " + e.ToString());
+                Console.WriteLine("Exception: " + ex.Message);
             }
             return answers;
         }
@@ -127,9 +122,9 @@ namespace TriviaGameDabaseService
                     wasNameStored = true;
                 }
             }
-            catch (MySqlException e)
+            catch (Exception ex)
             {
-                Console.WriteLine("ERROR: " + e.ToString());
+                Console.WriteLine("Exception: " + ex.Message);
                 wasNameStored = false;
             }
             return wasNameStored;
@@ -137,7 +132,7 @@ namespace TriviaGameDabaseService
 
         // Call this after storeusername has been called
         // Enter the user into the leaderboard table
-        public bool EnterUserInLeaderboard(String userName, int gameNumber)
+        public bool InitializeUserInLeaderboard(String userName, int gameNumber)
         {
             bool wasUserEntered = false;
 
@@ -153,14 +148,15 @@ namespace TriviaGameDabaseService
                     wasUserEntered = true;
                 }
             }
-            catch (MySqlException e)
+            catch (Exception ex)
             {
-                Console.WriteLine("ERROR: " + e.ToString());
+                Console.WriteLine("Exception: " + ex.Message);
                 wasUserEntered = false;
             }
             return wasUserEntered;
         }
 
+        // Store the user's answer
         public bool StoreUserAnswer(String userName, int gameNumber, int gameQuestion, String userAnswer, int answerScore)
         {
             bool wasAnswerStored = false;
@@ -169,8 +165,6 @@ namespace TriviaGameDabaseService
             {
                 if (sqlConnection.State == ConnectionState.Open)
                 {
-                    // check if answer was correct - make a function?
-
                     String answerScript = "INSERT INTO UserAnswer (GameNumber, Name, GameQuestion, UserAnswer, AnswerScore)"
                     + "VALUES (" + gameNumber + ", '" + userName + "', " + gameQuestion + ", '" + userAnswer + "', " + answerScore + ");";
 
@@ -180,15 +174,147 @@ namespace TriviaGameDabaseService
                     wasAnswerStored = true;
                 }
             }
-            catch (MySqlException e)
+            catch (Exception ex)
             {
-                Console.WriteLine("ERROR: " + e.ToString());
+                Console.WriteLine("Exception: " + ex.Message);
                 wasAnswerStored = false;
             }
             return wasAnswerStored;
         }
 
+        // users score is being passed, so alter the userGames table to change the gameScore
+        public bool AlterLeaderboard(int gameNumber, String name, int gameScore)
+        {
+            bool isLeaderboardUpdated = false;
+
+            try
+            {
+                if (sqlConnection.State == ConnectionState.Open)
+                {
+                    String updateScript = "UPDATE UserGames SET GameScore=" + gameScore + " WHERE Name='" + name + "';";
+
+                    MySqlCommand myCommand = new MySqlCommand(updateScript, sqlConnection);
+                    myCommand.ExecuteNonQuery();
+
+                    isLeaderboardUpdated = true;
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Exception:" + ex.Message);
+                isLeaderboardUpdated = false;
+            }
+            return isLeaderboardUpdated;
+        }
+
+        // get the leaderboard
+        public String Leaderboard(int gameNumber)
+        {
+            String leaderboard = "";
+
+            try
+            {
+                if (sqlConnection.State == ConnectionState.Open)
+                {
+                    String leaderboardScript = "SELECT Name, GameScore FROM UserGames WHERE GameNumber=" + gameNumber + " ORDER BY GameScore DESC;";
+                    MySqlCommand myCommand = new MySqlCommand(leaderboardScript, sqlConnection);
+
+                    MySqlDataReader readData = myCommand.ExecuteReader();
+
+                    while (readData.Read())
+                    {
+                        leaderboard += readData.GetString(0) + " " + readData.GetString(1) + "\n";
+                    }
+                    readData.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Exception: " + ex.Message);
+                leaderboard = "";
+            }
+            return leaderboard;
+        }
 
 
+        // set the user to inactive
+        public bool SetUserToInactive(String name)
+        {
+            bool isUserNotActive = false;
+
+            try
+            {
+                if (sqlConnection.State == ConnectionState.Open)
+                {
+                    String inactiveScript = "UPDATE Users SET IsActive=FALSE WHERE Name='" + name + "';";
+
+                    MySqlCommand myCommand = new MySqlCommand(inactiveScript, sqlConnection);
+                    myCommand.ExecuteNonQuery();
+
+                    isUserNotActive = true;
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Exception: " + ex.Message);
+                isUserNotActive = false;
+            }
+            return isUserNotActive;
+        }
+
+        // find out if name has already been used
+        public bool IsNameInDatabase(String name)
+        {
+            bool isNameTaken = false;
+            int nameCount = 0;
+
+            try
+            {
+                if (sqlConnection.State == ConnectionState.Open)
+                {
+                    String nameScript = "SELECT count(*) FROM Users WHERE Name='" + name + "';";
+                    MySqlCommand myCommand = new MySqlCommand(nameScript, sqlConnection);
+
+                    nameCount = Convert.ToInt32(myCommand.ExecuteScalar());
+
+                    if (nameCount == 0)
+                    {
+                        isNameTaken = false;
+                    }
+                    else
+                    {
+                        isNameTaken = true;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Exception: " + ex.Message);
+                isNameTaken = true;
+            }
+            return isNameTaken;
+        }
+
+        // get the correct answer for a specific question number
+        public String GetCorrectAnswer(int questionNumber)
+        {
+            String correctAnswer = "";
+
+            try
+            {
+                if (sqlConnection.State == ConnectionState.Open)
+                {
+                    String answerScript = "SELECT Answer FROM TestAnswers WHERE QuestionNumber=" + questionNumber + " AND IsCorrect=TRUE;";
+                    MySqlCommand myCommand = new MySqlCommand(answerScript, sqlConnection);
+
+                    correctAnswer = Convert.ToString(myCommand.ExecuteScalar());
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Exception: " + ex.Message);
+            }
+            return correctAnswer;
+        }
     }
 }
