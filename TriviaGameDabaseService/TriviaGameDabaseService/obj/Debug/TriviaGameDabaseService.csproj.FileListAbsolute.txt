@@ -1,7 +1,7 @@
+F:\Repository\Trivia-Game\trunk\TriviaGameDabaseService\TriviaGameDabaseService\bin\Debug\TriviaGameDabaseService.exe.config
 F:\Repository\Trivia-Game\trunk\TriviaGameDabaseService\TriviaGameDabaseService\bin\Debug\TriviaGameDabaseService.exe
 F:\Repository\Trivia-Game\trunk\TriviaGameDabaseService\TriviaGameDabaseService\bin\Debug\TriviaGameDabaseService.pdb
-F:\Repository\Trivia-Game\trunk\TriviaGameDabaseService\TriviaGameDabaseService\obj\Debug\TriviaGameDabaseService.csprojResolveAssemblyReference.cache
-F:\Repository\Trivia-Game\trunk\TriviaGameDabaseService\TriviaGameDabaseService\obj\Debug\TriviaGameDabaseService.exe
-F:\Repository\Trivia-Game\trunk\TriviaGameDabaseService\TriviaGameDabaseService\obj\Debug\TriviaGameDabaseService.pdb
 F:\Repository\Trivia-Game\trunk\TriviaGameDabaseService\TriviaGameDabaseService\obj\Debug\TriviaGameDabaseService.ProjectInstaller.resources
 F:\Repository\Trivia-Game\trunk\TriviaGameDabaseService\TriviaGameDabaseService\obj\Debug\TriviaGameDabaseService.csproj.GenerateResource.Cache
+F:\Repository\Trivia-Game\trunk\TriviaGameDabaseService\TriviaGameDabaseService\obj\Debug\TriviaGameDabaseService.exe
+F:\Repository\Trivia-Game\trunk\TriviaGameDabaseService\TriviaGameDabaseService\obj\Debug\TriviaGameDabaseService.pdb
