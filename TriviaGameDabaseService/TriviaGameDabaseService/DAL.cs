@@ -79,6 +79,9 @@ namespace TriviaGameDabaseService
         public String GetAnswers(int questionNumber)
         {
             String answers = "";
+            String currentAnswer = "";
+            String correctAnswer;
+            int correctAnswerLocation = 0;
             int counter = 1;
 
             try
@@ -88,14 +91,21 @@ namespace TriviaGameDabaseService
                     String answersScript = "SELECT Answer From TestAnswers WHERE QuestionNumber=" + questionNumber + ";";
                     MySqlCommand myCommand = new MySqlCommand(answersScript, sqlConnection);
 
+                    correctAnswer = this.GetCorrectAnswer(questionNumber);
+
                     MySqlDataReader readData = myCommand.ExecuteReader();
                     while (readData.Read())
                     {
-                        answers += counter + ". " + ((String) (readData["Answer"]));
-                        answers += "\n";
+                        currentAnswer = (String)(readData["Answer"]);
+                        answers += currentAnswer + "|";
+                        if (currentAnswer == correctAnswer)
+                        {
+                            correctAnswerLocation = counter;
+                        }
                         counter++;
                     }
                     readData.Close();
+                    answers += correctAnswerLocation.ToString();
                 }
             }
             catch (Exception ex)
@@ -316,5 +326,12 @@ namespace TriviaGameDabaseService
             }
             return correctAnswer;
         }
+
+        // edit questions and answers
+
+
+        // see current status of participants
+
+
     }
 }
