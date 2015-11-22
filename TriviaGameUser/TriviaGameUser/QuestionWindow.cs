@@ -108,9 +108,15 @@ namespace TriviaGameUser
                 }
                 else
                 {
-                    sendGameScore();
                     //end game
-                    lbl_Question.Text = "your score: " + gameScore.ToString() + leaderboard;
+                    sendGameScore();
+                    Application.Run(new Answers(input,output));
+                    Application.Run(new Leaderboard(leaderboard));
+                    //clear Board
+                    questionNumber = 1;
+                    gameScore = 0;
+                    //restart
+                    getGameQuestion();
                 }
             }
         }
