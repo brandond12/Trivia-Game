@@ -7,3 +7,4 @@ F:\Repository\Trivia-Game\trunk\TriviaGameAdmin\TriviaGameAdmin\obj\Debug\Trivia
 F:\Repository\Trivia-Game\trunk\TriviaGameAdmin\TriviaGameAdmin\obj\Debug\TriviaGameAdmin.exe
 F:\Repository\Trivia-Game\trunk\TriviaGameAdmin\TriviaGameAdmin\obj\Debug\TriviaGameAdmin.pdb
 F:\Repository\Trivia-Game\trunk\TriviaGameAdmin\TriviaGameAdmin\obj\Debug\TriviaGameAdmin.MainWindow.resources
+F:\Repository\Trivia-Game\trunk\TriviaGameAdmin\TriviaGameAdmin\bin\Debug\TriviaGameAdmin.exe.config
