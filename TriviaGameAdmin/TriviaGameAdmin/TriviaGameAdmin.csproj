@@ -43,6 +43,24 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CurrentStatus.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CurrentStatus.Designer.cs">
+      <DependentUpon>CurrentStatus.cs</DependentUpon>
+    </Compile>
+    <Compile Include="EditQuestions.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="EditQuestions.Designer.cs">
+      <DependentUpon>EditQuestions.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Leaderboard.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Leaderboard.Designer.cs">
+      <DependentUpon>Leaderboard.cs</DependentUpon>
+    </Compile>
     <Compile Include="MainWindow.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -57,6 +75,15 @@
       <DependentUpon>ProgramStart.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="CurrentStatus.resx">
+      <DependentUpon>CurrentStatus.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="EditQuestions.resx">
+      <DependentUpon>EditQuestions.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Leaderboard.resx">
+      <DependentUpon>Leaderboard.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="MainWindow.resx">
       <DependentUpon>MainWindow.cs</DependentUpon>
     </EmbeddedResource>

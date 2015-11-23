@@ -32,14 +32,24 @@ namespace TriviaGameAdmin
             {
                 userName = txtbx_name.Text;
                 serverName = txtbx_server.Text;
-                //connect to service
-                server = new NamedPipeServerStream("ServiceOutgoing");
-                server.WaitForConnection();
-                input = new StreamReader(server);
+                //set up the named pipe security
+                PipeSecurity ps = new PipeSecurity();
+                System.Security.Principal.SecurityIdentifier sid = new System.Security.Principal.SecurityIdentifier(System.Security.Principal.WellKnownSidType.WorldSid, null);
+                PipeAccessRule par = new PipeAccessRule(sid, PipeAccessRights.ReadWrite, System.Security.AccessControl.AccessControlType.Allow);
+                ps.AddAccessRule(par);
 
-                client = new NamedPipeClientStream(serverName, "UserOutgoing");
+                //connect to service
+                client = new NamedPipeClientStream("ServiceOutgoing");//add server name
                 client.Connect();
                 output = new StreamWriter(client);
+
+                //tell ther service this computers name
+                output.WriteLine(Environment.MachineName);
+                output.Flush();
+
+                server = new NamedPipeServerStream("UserOutgoing", PipeDirection.InOut, 1, PipeTransmissionMode.Byte, PipeOptions.Asynchronous, 500, 500, ps);
+                server.WaitForConnection();
+                input = new StreamReader(server);
 
                 //get namedPipe Name
                 output.WriteLine("UserName"); 

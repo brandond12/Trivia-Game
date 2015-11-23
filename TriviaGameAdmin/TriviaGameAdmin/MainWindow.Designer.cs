@@ -28,84 +28,74 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.lbl_sqlCommand = new System.Windows.Forms.Label();
-            this.txtbx_UserInput = new System.Windows.Forms.TextBox();
-            this.lbl_sqlResponce = new System.Windows.Forms.Label();
-            this.btn_Submit = new System.Windows.Forms.Button();
-            this.txtbx_ServerOutput = new System.Windows.Forms.TextBox();
+            this.btn_EditQuestion = new System.Windows.Forms.Button();
+            this.btn_CurrentStatus = new System.Windows.Forms.Button();
+            this.btn_Leaderboard = new System.Windows.Forms.Button();
+            this.btn_ExportExcel = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
-            // lbl_sqlCommand
+            // btn_EditQuestion
             // 
-            this.lbl_sqlCommand.AutoSize = true;
-            this.lbl_sqlCommand.Location = new System.Drawing.Point(13, 13);
-            this.lbl_sqlCommand.Name = "lbl_sqlCommand";
-            this.lbl_sqlCommand.Size = new System.Drawing.Size(78, 13);
-            this.lbl_sqlCommand.TabIndex = 0;
-            this.lbl_sqlCommand.Text = "SQL Command";
+            this.btn_EditQuestion.Location = new System.Drawing.Point(13, 13);
+            this.btn_EditQuestion.Name = "btn_EditQuestion";
+            this.btn_EditQuestion.Size = new System.Drawing.Size(80, 23);
+            this.btn_EditQuestion.TabIndex = 0;
+            this.btn_EditQuestion.Text = "Edit Question";
+            this.btn_EditQuestion.UseVisualStyleBackColor = true;
+            this.btn_EditQuestion.Click += new System.EventHandler(this.btn_EditQuestion_Click);
             // 
-            // txtbx_UserInput
+            // btn_CurrentStatus
             // 
-            this.txtbx_UserInput.Location = new System.Drawing.Point(13, 30);
-            this.txtbx_UserInput.Multiline = true;
-            this.txtbx_UserInput.Name = "txtbx_UserInput";
-            this.txtbx_UserInput.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtbx_UserInput.Size = new System.Drawing.Size(597, 69);
-            this.txtbx_UserInput.TabIndex = 1;
+            this.btn_CurrentStatus.Location = new System.Drawing.Point(100, 13);
+            this.btn_CurrentStatus.Name = "btn_CurrentStatus";
+            this.btn_CurrentStatus.Size = new System.Drawing.Size(82, 23);
+            this.btn_CurrentStatus.TabIndex = 1;
+            this.btn_CurrentStatus.Text = "Current Status";
+            this.btn_CurrentStatus.UseVisualStyleBackColor = true;
+            this.btn_CurrentStatus.Click += new System.EventHandler(this.btn_CurrentStatus_Click);
             // 
-            // lbl_sqlResponce
+            // btn_Leaderboard
             // 
-            this.lbl_sqlResponce.AutoSize = true;
-            this.lbl_sqlResponce.Location = new System.Drawing.Point(13, 134);
-            this.lbl_sqlResponce.Name = "lbl_sqlResponce";
-            this.lbl_sqlResponce.Size = new System.Drawing.Size(105, 13);
-            this.lbl_sqlResponce.TabIndex = 2;
-            this.lbl_sqlResponce.Text = "Database Responce";
+            this.btn_Leaderboard.Location = new System.Drawing.Point(188, 13);
+            this.btn_Leaderboard.Name = "btn_Leaderboard";
+            this.btn_Leaderboard.Size = new System.Drawing.Size(78, 23);
+            this.btn_Leaderboard.TabIndex = 2;
+            this.btn_Leaderboard.Text = "Leaderboard";
+            this.btn_Leaderboard.UseVisualStyleBackColor = true;
+            this.btn_Leaderboard.Click += new System.EventHandler(this.btn_Leaderboard_Click);
             // 
-            // btn_Submit
+            // btn_ExportExcel
             // 
-            this.btn_Submit.Location = new System.Drawing.Point(535, 106);
-            this.btn_Submit.Name = "btn_Submit";
-            this.btn_Submit.Size = new System.Drawing.Size(75, 23);
-            this.btn_Submit.TabIndex = 3;
-            this.btn_Submit.Text = "Submit";
-            this.btn_Submit.UseVisualStyleBackColor = true;
-            this.btn_Submit.Click += new System.EventHandler(this.btn_Submit_Click);
-            // 
-            // txtbx_ServerOutput
-            // 
-            this.txtbx_ServerOutput.Location = new System.Drawing.Point(16, 151);
-            this.txtbx_ServerOutput.Multiline = true;
-            this.txtbx_ServerOutput.Name = "txtbx_ServerOutput";
-            this.txtbx_ServerOutput.ReadOnly = true;
-            this.txtbx_ServerOutput.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtbx_ServerOutput.Size = new System.Drawing.Size(594, 183);
-            this.txtbx_ServerOutput.TabIndex = 4;
+            this.btn_ExportExcel.Location = new System.Drawing.Point(273, 13);
+            this.btn_ExportExcel.Name = "btn_ExportExcel";
+            this.btn_ExportExcel.Size = new System.Drawing.Size(79, 23);
+            this.btn_ExportExcel.TabIndex = 3;
+            this.btn_ExportExcel.Text = "Export Excel";
+            this.btn_ExportExcel.UseVisualStyleBackColor = true;
+            this.btn_ExportExcel.Click += new System.EventHandler(this.btn_ExportExcel_Click);
             // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(622, 346);
-            this.Controls.Add(this.txtbx_ServerOutput);
-            this.Controls.Add(this.btn_Submit);
-            this.Controls.Add(this.lbl_sqlResponce);
-            this.Controls.Add(this.txtbx_UserInput);
-            this.Controls.Add(this.lbl_sqlCommand);
+            this.ClientSize = new System.Drawing.Size(385, 58);
+            this.Controls.Add(this.btn_ExportExcel);
+            this.Controls.Add(this.btn_Leaderboard);
+            this.Controls.Add(this.btn_CurrentStatus);
+            this.Controls.Add(this.btn_EditQuestion);
             this.Name = "MainWindow";
             this.Text = "Admin";
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
         #endregion
 
-        private System.Windows.Forms.Label lbl_sqlCommand;
-        private System.Windows.Forms.TextBox txtbx_UserInput;
-        private System.Windows.Forms.Label lbl_sqlResponce;
-        private System.Windows.Forms.Button btn_Submit;
-        private System.Windows.Forms.TextBox txtbx_ServerOutput;
+        private System.Windows.Forms.Button btn_EditQuestion;
+        private System.Windows.Forms.Button btn_CurrentStatus;
+        private System.Windows.Forms.Button btn_Leaderboard;
+        private System.Windows.Forms.Button btn_ExportExcel;
+
     }
 }
 

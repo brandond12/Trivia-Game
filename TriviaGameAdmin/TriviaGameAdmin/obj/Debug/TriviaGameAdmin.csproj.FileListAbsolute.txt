@@ -8,3 +8,6 @@ F:\Repository\Trivia-Game\trunk\TriviaGameAdmin\TriviaGameAdmin\obj\Debug\Trivia
 F:\Repository\Trivia-Game\trunk\TriviaGameAdmin\TriviaGameAdmin\obj\Debug\TriviaGameAdmin.pdb
 F:\Repository\Trivia-Game\trunk\TriviaGameAdmin\TriviaGameAdmin\obj\Debug\TriviaGameAdmin.MainWindow.resources
 F:\Repository\Trivia-Game\trunk\TriviaGameAdmin\TriviaGameAdmin\bin\Debug\TriviaGameAdmin.exe.config
+F:\Repository\Trivia-Game\trunk\TriviaGameAdmin\TriviaGameAdmin\obj\Debug\TriviaGameAdmin.CurrentStatus.resources
+F:\Repository\Trivia-Game\trunk\TriviaGameAdmin\TriviaGameAdmin\obj\Debug\TriviaGameAdmin.EditQuestions.resources
+F:\Repository\Trivia-Game\trunk\TriviaGameAdmin\TriviaGameAdmin\obj\Debug\TriviaGameAdmin.Leaderboard.resources

@@ -50,6 +50,7 @@
             this.txtbx_name.Name = "txtbx_name";
             this.txtbx_name.Size = new System.Drawing.Size(242, 20);
             this.txtbx_name.TabIndex = 1;
+            this.txtbx_name.Text = "TestName";
             // 
             // lbl_ServerName
             // 
@@ -66,6 +67,7 @@
             this.txtbx_server.Name = "txtbx_server";
             this.txtbx_server.Size = new System.Drawing.Size(237, 20);
             this.txtbx_server.TabIndex = 3;
+            this.txtbx_server.Text = ".";
             // 
             // btn_submit
             // 
