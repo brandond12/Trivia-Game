@@ -294,8 +294,8 @@ namespace TriviaGameDabaseService
                         //read in question number
                         string buffer = input.ReadLine();
                         int questionNumber = Int32.Parse(buffer);
-
                         Logger.Log("Pipe: " + clientPipeName + "in GetQuestion command code. Getting Question: " + questionNumber);
+                        
                         //get question data
                         //put it in questionFromDatabase
                         splitbuffer = questionFromDatabase.Split('|');
@@ -338,6 +338,39 @@ namespace TriviaGameDabaseService
                         output.WriteLine(leaderboard);
                         output.Flush();
                     }
+                    else if (userCommand == "GetLeaderboard")
+                    {
+                        Logger.Log("Pipe: " + clientPipeName + "in GetLeaderboard command code");
+                        string leaderboard = "temp"; ////////////////remove temp
+                        //get leaderboard from database
+                        //send leaderboard to user
+                        output.WriteLine(leaderboard);
+                        output.Flush();
+                    }
+                    else if (userCommand == "GetCurrentStatus")
+                    {
+                        Logger.Log("Pipe: " + clientPipeName + "in GetCurrentStatus command code");
+                        string currentStatus = "temp"; ////////////////remove temp
+                        //get currentStatus from database
+                        //send currentStatus to user
+                        output.WriteLine(currentStatus);
+                        output.Flush();
+                    }
+                    else if (userCommand == "SaveQuestion")
+                    {
+                        Logger.Log("Pipe: " + clientPipeName + "in SaveQuestion command code");
+                        int questionNumber = Int32.Parse(input.ReadLine());
+                        string question = input.ReadLine();
+                        string answer1 = input.ReadLine();
+                        string answer2 = input.ReadLine();
+                        string answer3 = input.ReadLine();
+                        string answer4 = input.ReadLine();
+                        int correctAnswer = Int32.Parse(input.ReadLine());
+                        //send question to database
+
+                        output.WriteLine("ok");
+                        output.Flush();
+                    }
                     else if (userCommand == "Quit")
                     {
                         Logger.Log("Pipe: " + clientPipeName + "Closing");
@@ -349,11 +382,15 @@ namespace TriviaGameDabaseService
                         //change user to inactive
                         break;
                     }
+                    else
+                    {
+                        Logger.Log("Pipe: " + clientPipeName + "Command not recognized");
+                    }
                 }
             }
-            catch(Exception)
+            catch(Exception ex)
             {
-                Logger.Log("Pipe: " + clientPipeName + "unknown error");
+                Logger.Log("Pipe: " + clientPipeName + " unknown error: " + ex.Message);
                 clients.DeleteClient((string)clientPipeName);
             }
         }
