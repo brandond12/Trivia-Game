@@ -25,5 +25,22 @@ namespace TriviaGameDabaseService
             Threads.Add(thread);
             clientPipes.Add(pipeName);
         }
+
+        public void DeleteClient(string pipeName)
+        {
+            int count = 0;
+            foreach(string name in clientPipes)
+            {
+                //if pipe names match, they are the a match
+                //remove from the lists
+                if(name == pipeName)
+                {
+                    Threads.RemoveAt(count);
+                    clientPipes.RemoveAt(count);
+                    break;
+                }
+                count++;
+            }
+        }
     }
 }

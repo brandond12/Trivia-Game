@@ -60,6 +60,7 @@
             this.txtbx_userName.Name = "txtbx_userName";
             this.txtbx_userName.Size = new System.Drawing.Size(191, 20);
             this.txtbx_userName.TabIndex = 2;
+            this.txtbx_userName.Text = "TestPerson";
             // 
             // txtbx_serverName
             // 
@@ -67,6 +68,7 @@
             this.txtbx_serverName.Name = "txtbx_serverName";
             this.txtbx_serverName.Size = new System.Drawing.Size(144, 20);
             this.txtbx_serverName.TabIndex = 3;
+            this.txtbx_serverName.Text = ".";
             // 
             // btn_Submit
             // 
