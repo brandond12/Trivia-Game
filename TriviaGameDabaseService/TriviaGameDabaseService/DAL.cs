@@ -8,7 +8,6 @@ using System.Reflection;
 
 namespace TriviaGameDabaseService
 {
-    // Writing to the console for testing purposes...
     class DAL
     {
         private MySqlConnection sqlConnection;
@@ -34,11 +33,11 @@ namespace TriviaGameDabaseService
             try
             {
                 sqlConnection.Open();
-                Console.WriteLine("Connection to database succeeded.");
+                Logger.Log("Connection to database succeeded.");
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Exception: " + ex.Message);
+                Logger.Log("Exception: " + ex.Message);
             }
         }
 
@@ -47,11 +46,11 @@ namespace TriviaGameDabaseService
             try
             {
                 sqlConnection.Close();
-                Console.WriteLine("Closing of the database connection succeeded.");
+                Logger.Log("Closing of the database connection succeeded.");
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Exception: " + ex.Message);
+                Logger.Log("Exception: " + ex.Message);
             }
         }
 
@@ -72,7 +71,7 @@ namespace TriviaGameDabaseService
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Exception: " + ex.Message);
+                Logger.Log("Exception: " + ex.Message);
             }
             return question;
         }
@@ -91,7 +90,7 @@ namespace TriviaGameDabaseService
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Exception: " + ex.Message);
+                Logger.Log("Exception: " + ex.Message);
             }
             return response;
         }
@@ -131,7 +130,7 @@ namespace TriviaGameDabaseService
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Exception: " + ex.Message);
+                Logger.Log("Exception: " + ex.Message);
             }
             return answers;
         }
@@ -155,7 +154,7 @@ namespace TriviaGameDabaseService
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Exception: " + ex.Message);
+                Logger.Log("Exception: " + ex.Message);
                 wasNameStored = false;
             }
             return wasNameStored;
@@ -181,7 +180,7 @@ namespace TriviaGameDabaseService
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Exception: " + ex.Message);
+                Logger.Log("Exception: " + ex.Message);
                 wasUserEntered = false;
             }
             return wasUserEntered;
@@ -207,7 +206,7 @@ namespace TriviaGameDabaseService
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Exception: " + ex.Message);
+                Logger.Log("Exception: " + ex.Message);
                 wasAnswerStored = false;
             }
             return wasAnswerStored;
@@ -232,7 +231,7 @@ namespace TriviaGameDabaseService
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Exception:" + ex.Message);
+                Logger.Log("Exception: " + ex.Message);
                 isLeaderboardUpdated = false;
             }
             return isLeaderboardUpdated;
@@ -261,7 +260,7 @@ namespace TriviaGameDabaseService
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Exception: " + ex.Message);
+                Logger.Log("Exception: " + ex.Message);
                 leaderboard = "";
             }
             return leaderboard;
@@ -287,7 +286,7 @@ namespace TriviaGameDabaseService
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Exception: " + ex.Message);
+                Logger.Log("Exception: " + ex.Message);
                 isUserNotActive = false;
             }
             return isUserNotActive;
@@ -320,7 +319,7 @@ namespace TriviaGameDabaseService
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Exception: " + ex.Message);
+                Logger.Log("Exception: " + ex.Message);
                 isNameTaken = true;
             }
             return isNameTaken;
@@ -343,7 +342,7 @@ namespace TriviaGameDabaseService
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Exception: " + ex.Message);
+                Logger.Log("Exception: " + ex.Message);
             }
             return correctAnswer;
         }
@@ -380,7 +379,7 @@ namespace TriviaGameDabaseService
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Exception: " + ex.Message);
+                Logger.Log("Exception: " + ex.Message);
             }
             return response;
         }
@@ -410,7 +409,7 @@ namespace TriviaGameDabaseService
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Exception: " + ex.Message);
+                Logger.Log("Exception: " + ex.Message);
                 currentScores = "";
             }
             return currentScores;
@@ -433,7 +432,7 @@ namespace TriviaGameDabaseService
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Exception: " + ex.Message);
+                Logger.Log("Exception: " + ex.Message);
                 averageTime = 0;
             }
             return averageTime;
@@ -456,7 +455,7 @@ namespace TriviaGameDabaseService
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Exception: " + ex.Message);
+                Logger.Log("Exception: " + ex.Message);
                 usersThatWereCorrect = 0;
             }
             return usersThatWereCorrect;
@@ -479,7 +478,7 @@ namespace TriviaGameDabaseService
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Exception: " + ex.Message);
+                Logger.Log("Exception: " + ex.Message);
                 usersThatWereIncorrect = 0;
             }
             return usersThatWereIncorrect;
@@ -488,130 +487,140 @@ namespace TriviaGameDabaseService
         // Get the percentage of users who answered correctly
         public float GetPercentOfUsersWhoAnsweredCorrectly(int questionNumber)
         {
-            int numberWhoWereRight = this.GetNumberOfUsersThatAnsweredCorrectly(questionNumber);
-            int numberWhoWereWrong = this.GetNumberOfUsersThatAnsweredIncorrectly(questionNumber);
-            int totalUsers = numberWhoWereRight + numberWhoWereWrong;
             float percent;
 
-            if (totalUsers != 0)
+            try
             {
-                percent = ((float)numberWhoWereRight / (float)totalUsers) * 100;
+                int numberWhoWereRight = this.GetNumberOfUsersThatAnsweredCorrectly(questionNumber);
+                int numberWhoWereWrong = this.GetNumberOfUsersThatAnsweredIncorrectly(questionNumber);
+                int totalUsers = numberWhoWereRight + numberWhoWereWrong;
+
+                if (totalUsers != 0)
+                {
+                    percent = ((float)numberWhoWereRight / (float)totalUsers) * 100;
+                }
+                else
+                {
+                    percent = 0;
+                }
             }
-            else
+            catch (Exception ex)
             {
+                Logger.Log("Exception: " + ex.Message);
                 percent = 0;
             }
             return percent;
         }
 
         // this method is a modified version of the code from https://support.microsoft.com/en-us/kb/302084
-        //public void ExcelAutomation()
-        //{
-        //    Excel.Application oXL;
-        //    Excel._Workbook oWB;
-        //    Excel._Worksheet oSheet;
-        //    Excel.Range oRng;
+        // (still have to change the comments!!)
+        public void ExcelAutomation()
+        {
+            Excel.Application oXL;
+            Excel._Workbook oWB;
+            Excel._Worksheet oSheet;
+            Excel.Range oRng;
 
-        //    try
-        //    {
-        //        //Start Excel and get Application object.
-        //        oXL = new Excel.Application();
-        //        oXL.Visible = true;
+            try
+            {
+                //Start Excel and get Application object.
+                oXL = new Excel.Application();
+                oXL.Visible = true;
 
-        //        //Get a new workbook.
-        //        oWB = (Excel._Workbook)(oXL.Workbooks.Add(Missing.Value));
-        //        oSheet = (Excel._Worksheet)oWB.ActiveSheet;
+                //Get a new workbook.
+                oWB = (Excel._Workbook)(oXL.Workbooks.Add(Missing.Value));
+                oSheet = (Excel._Worksheet)oWB.ActiveSheet;
 
-        //        //Add table headers going cell by cell.
-        //        oSheet.Cells[1, 1] = "Question Number";
-        //        oSheet.Cells[1, 2] = "Question Text";
-        //        oSheet.Cells[1, 3] = "Average Correct Answer Time (s)";
-        //        oSheet.Cells[1, 4] = "% Who Answered Correctly";
+                //Add table headers going cell by cell.
+                oSheet.Cells[1, 1] = "Question Number";
+                oSheet.Cells[1, 2] = "Question Text";
+                oSheet.Cells[1, 3] = "Average Correct Answer Time (s)";
+                oSheet.Cells[1, 4] = "% Who Answered Correctly";
 
-        //        //Format A1:K1 as bold, vertical alignment = center, and wrapping = true.
-        //        oSheet.get_Range("A1", "D1").Font.Bold = true;
-        //        oSheet.get_Range("A1", "D1").VerticalAlignment = Excel.XlVAlign.xlVAlignCenter;
-        //        oSheet.get_Range("A1", "D1").HorizontalAlignment = Excel.XlVAlign.xlVAlignCenter;
-        //        oSheet.get_Range("A1", "D1").WrapText = true;
+                //Format A1:K1 as bold, vertical alignment = center, and wrapping = true.
+                oSheet.get_Range("A1", "D1").Font.Bold = true;
+                oSheet.get_Range("A1", "D1").VerticalAlignment = Excel.XlVAlign.xlVAlignCenter;
+                oSheet.get_Range("A1", "D1").HorizontalAlignment = Excel.XlVAlign.xlVAlignCenter;
+                oSheet.get_Range("A1", "D1").WrapText = true;
 
 
-        //        // Made this array of type object to store both strings and ints
-        //        Object[,] questionArray = new Object[11, 2];
+                // Made this array of type object to store both strings and ints
+                Object[,] questionArray = new Object[11, 2];
 
-        //        for (int counter = 0; counter < 10; counter++)
-        //        {
-        //            String questionText = this.GetQuestion(counter + 1);
-        //            questionArray[counter, 0] = counter + 1;
-        //            questionArray[counter, 1] = questionText;
-        //        }
+                for (int counter = 0; counter < 10; counter++)
+                {
+                    String questionText = this.GetQuestion(counter + 1);
+                    questionArray[counter, 0] = counter + 1;
+                    questionArray[counter, 1] = questionText;
+                }
 
-        //        //Fill A2:B6 with an array of values (Question # and Question Text).
-        //        oSheet.get_Range("A2", "B11").Value2 = questionArray;
-        //        oRng = oSheet.get_Range("B2", "B11");
-        //        oRng.EntireColumn.AutoFit();
+                //Fill A2:B6 with an array of values (Question # and Question Text).
+                oSheet.get_Range("A2", "B11").Value2 = questionArray;
+                oRng = oSheet.get_Range("B2", "B11");
+                oRng.EntireColumn.AutoFit();
 
-        //        // Get the average time to answer correctly
-        //        float[,] averageTimes = new float[10, 10];
-        //        for (int counter = 0; counter < 10; counter++)
-        //        {
-        //            float currentAverageTime = this.GetAverageTimeToAnswerCorrectly(counter + 1);
-        //            averageTimes[counter, 0] = currentAverageTime;
-        //        }
+                // Get the average time to answer correctly
+                float[,] averageTimes = new float[10, 10];
+                for (int counter = 0; counter < 10; counter++)
+                {
+                    float currentAverageTime = this.GetAverageTimeToAnswerCorrectly(counter + 1);
+                    averageTimes[counter, 0] = currentAverageTime;
+                }
 
-        //        // Fill J2:J11 with an array of average times, and autofit the columns
-        //        oSheet.get_Range("C2", "C11").Value2 = averageTimes;
-        //        oRng = oSheet.get_Range("C2", "C11");
-        //        oRng.EntireColumn.AutoFit();
+                // Fill J2:J11 with an array of average times, and autofit the columns
+                oSheet.get_Range("C2", "C11").Value2 = averageTimes;
+                oRng = oSheet.get_Range("C2", "C11");
+                oRng.EntireColumn.AutoFit();
 
-        //        // Get the percentage of users who answered the question correctly
-        //        float[,] percentCorrect = new float[10, 10];
-        //        for (int counter = 0; counter < 10; counter++)
-        //        {
-        //            float currentQuestionPercent = this.GetPercentOfUsersWhoAnsweredCorrectly(counter + 1);
-        //            percentCorrect[counter, 0] = currentQuestionPercent;
-        //        }
+                // Get the percentage of users who answered the question correctly
+                float[,] percentCorrect = new float[10, 10];
+                for (int counter = 0; counter < 10; counter++)
+                {
+                    float currentQuestionPercent = this.GetPercentOfUsersWhoAnsweredCorrectly(counter + 1);
+                    percentCorrect[counter, 0] = currentQuestionPercent;
+                }
 
-        //        // Fill K2:K11 with an array of percents, and autofit the column
-        //        oSheet.get_Range("D2", "D11").Value2 = percentCorrect;
-        //        oRng = oSheet.get_Range("D2", "D11");
-        //        oRng.EntireColumn.AutoFit();
+                // Fill K2:K11 with an array of percents, and autofit the column
+                oSheet.get_Range("D2", "D11").Value2 = percentCorrect;
+                oRng = oSheet.get_Range("D2", "D11");
+                oRng.EntireColumn.AutoFit();
 
-        //        //Manipulate a variable number of columns for Quarterly Sales Data.
-        //        DisplayHistogram(oSheet);
+                //Manipulate a variable number of columns for Quarterly Sales Data.
+                DisplayHistogram(oSheet);
 
-        //        //Make sure Excel is visible and give the user control
-        //        //of Microsoft Excel's lifetime.
-        //        oXL.Visible = true;
-        //        oXL.UserControl = true;
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        Console.WriteLine("Exception: " + ex.Message);
-        //    }
-        //}
+                //Make sure Excel is visible and give the user control
+                //of Microsoft Excel's lifetime.
+                oXL.Visible = true;
+                oXL.UserControl = true;
+            }
+            catch (Exception ex)
+            {
+                Logger.Log("Exception: " + ex.Message);
+            }
+        }
 
-        //// In addition, a histogram should be created to show the average length of time needed to answer each question correctly
-        //// this method is a modified version of the code from https://support.microsoft.com/en-us/kb/302084
-        //public void DisplayHistogram(Excel._Worksheet oWS)
-        //{
-        //    Excel._Workbook oWB;
-        //    Excel.Range oRange;
-        //    Excel._Chart oChart;
-        //    Excel.Series oSeries;
+        // In addition, a histogram should be created to show the average length of time needed to answer each question correctly
+        // this method is a modified version of the code from https://support.microsoft.com/en-us/kb/302084
+        public void DisplayHistogram(Excel._Worksheet oWS)
+        {
+            Excel._Workbook oWB;
+            Excel.Range oRange;
+            Excel._Chart oChart;
+            Excel.Series oSeries;
 
-        //    //Add a Chart for the selected data.
-        //    oWB = (Excel._Workbook)oWS.Parent;
-        //    oChart = (Excel._Chart)oWB.Charts.Add(Missing.Value, Missing.Value, Missing.Value, Missing.Value);
-  
-        //    //Use the ChartWizard to create a new chart from the selected data.
-        //    oRange = oWS.get_Range("B1", "C11");
-        //    oChart.SetSourceData(oRange, Missing.Value);
-        //    oChart.ChartWizard(oRange, Excel.XlChartType.xlBarClustered, Missing.Value,
-        //        Excel.XlRowCol.xlColumns, Missing.Value, Missing.Value, Missing.Value,
-        //        "Average Length of Time to Answer Questions Correctly", "Questions", "Time (seconds)", Missing.Value);
-        //    oSeries = (Excel.Series)oChart.SeriesCollection(1);
-        //    oSeries.XValues = oWS.get_Range("B2", "B11");
-        //}
+            //Add a Chart for the selected data.
+            oWB = (Excel._Workbook)oWS.Parent;
+            oChart = (Excel._Chart)oWB.Charts.Add(Missing.Value, Missing.Value, Missing.Value, Missing.Value);
+
+            //Use the ChartWizard to create a new chart from the selected data.
+            oRange = oWS.get_Range("B1", "C11");
+            oChart.SetSourceData(oRange, Missing.Value);
+            oChart.ChartWizard(oRange, Excel.XlChartType.xlBarClustered, Missing.Value,
+                Excel.XlRowCol.xlColumns, Missing.Value, Missing.Value, Missing.Value,
+                "Average Length of Time to Answer Questions Correctly", "Questions", "Time (seconds)", Missing.Value);
+            oSeries = (Excel.Series)oChart.SeriesCollection(1);
+            oSeries.XValues = oWS.get_Range("B2", "B11");
+        }
 
     }
 }
