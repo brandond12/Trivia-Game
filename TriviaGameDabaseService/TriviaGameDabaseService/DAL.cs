@@ -253,7 +253,7 @@ namespace TriviaGameDabaseService
 
                     while (readData.Read())
                     {
-                        leaderboard += readData.GetString(0) + " " + readData.GetString(1) + "\n";
+                        leaderboard += readData.GetString(0) + " " + readData.GetString(1) + "|";
                     }
                     readData.Close();
                 }

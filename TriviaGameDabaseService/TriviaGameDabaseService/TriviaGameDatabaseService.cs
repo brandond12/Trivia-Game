@@ -224,6 +224,9 @@ namespace TriviaGameDabaseService
             StreamReader input;
             StreamWriter output;
 
+            DAL dal = new DAL();
+            string userName = "";
+
             //set up pipe security
             PipeSecurity ps = new PipeSecurity();
             System.Security.Principal.SecurityIdentifier sid = new System.Security.Principal.SecurityIdentifier(System.Security.Principal.WellKnownSidType.WorldSid, null);
@@ -280,22 +283,35 @@ namespace TriviaGameDabaseService
                     {
                         Logger.Log("Pipe: " + clientPipeName + "in newUser command code");
                         //read in user name
-                        string userName = input.ReadLine();
+                        userName = input.ReadLine();
                         //add to database
                         output.WriteLine("OK");
                         output.Flush();
                         //if user not in database add
-                        //set user to active
+                        dal.OpenConnection();
+                        bool isUserTaken = dal.IsNameInDatabase(userName);
+                        dal.CloseConnection();
+                        if (isUserTaken == false)
+                        {
+                            dal.OpenConnection();
+                            dal.StoreUserName(userName);
+                            dal.InitializeUserInLeaderboard(userName, 1); //set user to active
+                            dal.CloseConnection();
+                        }
                     }
                     else if (userCommand == "GetQuestion")
                     {
                         string[] splitbuffer = new string[5];
-                        string questionFromDatabase = "testQuestion|testAnswer1|testAnswer2|testAnswer3|testAnswer4|1";
+                        
                         //read in question number
                         string buffer = input.ReadLine();
                         int questionNumber = Int32.Parse(buffer);
                         Logger.Log("Pipe: " + clientPipeName + "in GetQuestion command code. Getting Question: " + questionNumber);
-                        
+                        // get question and answers from database
+                        dal.OpenConnection();
+                        string questionFromDatabase = dal.GetQuestionAndAnswers(questionNumber);
+                        dal.CloseConnection();
+
                         //get question data
                         //put it in questionFromDatabase
                         splitbuffer = questionFromDatabase.Split('|');
@@ -317,23 +333,37 @@ namespace TriviaGameDabaseService
                         Logger.Log("Pipe: " + clientPipeName + "in QuestionAnswered command code");
                         //read in question number
                         string questionNumber = input.ReadLine();
+                        int intQuestionNumber = Convert.ToInt32(questionNumber);
                         //read in users answer
                         string answer = input.ReadLine();
                         //read in user score
                         string score = input.ReadLine();
+                        int intScore = Convert.ToInt32(score);
 
                         //send to database
+                        dal.OpenConnection();
+                        dal.StoreUserAnswer(userName, 1, intQuestionNumber, answer, intScore);
+                        dal.CloseConnection();
+
                         output.WriteLine("OK");
                         output.Flush();
                     }
                     else if (userCommand == "GameDone")
                     {
                         Logger.Log("Pipe: " + clientPipeName + "in GameDone command code");
-                        string leaderboard = "temp"; ////////////////remove temp
+              
                         //read in users score for the game
                         string gameScore = input.ReadLine();
+                        int intGameScore = Convert.ToInt32(gameScore);
                         //save to database
+                        dal.OpenConnection();
+                        dal.AlterLeaderboard(1, userName, intGameScore);
+                        dal.CloseConnection();
+
                         //get leaderboard from database
+                        dal.OpenConnection();
+                        string leaderboard = dal.Leaderboard(1); //get leaderboard from database
+                        dal.CloseConnection();
                         //send leaderboard to user
                         output.WriteLine(leaderboard);
                         output.Flush();
@@ -341,8 +371,9 @@ namespace TriviaGameDabaseService
                     else if (userCommand == "GetLeaderboard")
                     {
                         Logger.Log("Pipe: " + clientPipeName + "in GetLeaderboard command code");
-                        string leaderboard = "temp"; ////////////////remove temp
-                        //get leaderboard from database
+                        dal.OpenConnection();
+                        string leaderboard = dal.Leaderboard(1); //get leaderboard from database
+                        dal.CloseConnection();
                         //send leaderboard to user
                         output.WriteLine(leaderboard);
                         output.Flush();
@@ -350,8 +381,9 @@ namespace TriviaGameDabaseService
                     else if (userCommand == "GetCurrentStatus")
                     {
                         Logger.Log("Pipe: " + clientPipeName + "in GetCurrentStatus command code");
-                        string currentStatus = "temp"; ////////////////remove temp
-                        //get currentStatus from database
+                        dal.OpenConnection();
+                        string currentStatus = dal.GetCurrentStatus(1); //get currentStatus from database
+                        dal.CloseConnection();
                         //send currentStatus to user
                         output.WriteLine(currentStatus);
                         output.Flush();
@@ -366,6 +398,7 @@ namespace TriviaGameDabaseService
                         string answer3 = input.ReadLine();
                         string answer4 = input.ReadLine();
                         int correctAnswer = Int32.Parse(input.ReadLine());
+
                         //send question to database
 
                         output.WriteLine("ok");
