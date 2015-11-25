@@ -372,7 +372,7 @@ namespace TriviaGameDabaseService
                             response += readData.GetString(columnCount);
                             response += " ";
                         }
-                        response += "\n";
+                        response += "|";
                     }
                     readData.Close();
                 }
@@ -402,7 +402,7 @@ namespace TriviaGameDabaseService
 
                     while (readData.Read())
                     {
-                        currentScores += readData.GetString(0) + " " + readData.GetString(1) + "\n";
+                        currentScores += readData.GetString(0) + " " + readData.GetString(1) + "|";
                     }
                     readData.Close();
                 }
