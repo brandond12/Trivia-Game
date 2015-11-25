@@ -407,6 +407,38 @@ namespace TriviaGameDabaseService
                         output.WriteLine("ok");
                         output.Flush();
                     }
+                    else if (userCommand == "GetExcel")
+                    {
+                        Logger.Log("Pipe: " + clientPipeName + "in GetExcel command code");
+
+                        for (int counter = 0; counter < 10; counter++)
+                        {
+                            dal.OpenConnection();
+                            String question = dal.GetQuestion(counter + 1);
+                            dal.CloseConnection();
+                            output.WriteLine(question);
+                            output.Flush();
+                        }
+
+                        for (int counter = 0; counter < 10; counter++)
+                        {
+                            dal.OpenConnection();
+                            float currentAverageTime = dal.GetAverageTimeToAnswerCorrectly(counter + 1);
+                            dal.CloseConnection();
+                            output.WriteLine(currentAverageTime);
+                            output.Flush();
+                        }
+
+                        float[,] percentCorrect = new float[10, 10];
+                        for (int counter = 0; counter < 10; counter++)
+                        {
+                            dal.OpenConnection();
+                            float currentQuestionPercent = dal.GetPercentOfUsersWhoAnsweredCorrectly(counter + 1);
+                            dal.CloseConnection();
+                            output.WriteLine(currentQuestionPercent);
+                            output.Flush();
+                        }
+                    }
                     else if (userCommand == "Quit")
                     {
                         Logger.Log("Pipe: " + clientPipeName + "Closing");
@@ -416,6 +448,9 @@ namespace TriviaGameDabaseService
                         //remove from repo
                         clients.DeleteClient((string)clientPipeName);
                         //change user to inactive
+                        dal.OpenConnection();
+                        dal.SetUserToInactive(userName);
+                        dal.CloseConnection();
                         break;
                     }
                     else
