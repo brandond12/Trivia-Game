@@ -61,7 +61,8 @@ namespace TriviaGameAdmin
         private void txtbxInvoke(Object inputLine)
         {
             //print to txt box
-            txtbx_CurrectStatus.Text = (String)inputLine + "\n";
+            String status = ((String)inputLine).Replace("|", "\r\n");
+            txtbx_CurrectStatus.Text = status;
             //scroll to bottom og text box
             txtbx_CurrectStatus.SelectionStart = txtbx_CurrectStatus.Text.Length;
             txtbx_CurrectStatus.ScrollToCaret();

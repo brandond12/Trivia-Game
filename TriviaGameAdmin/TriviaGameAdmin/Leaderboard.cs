@@ -20,7 +20,9 @@ namespace TriviaGameAdmin
             output.WriteLine("GetLeaderboard.");
             output.Flush();
 
-            txtbx_Leaderboard.Text = input.ReadLine();
+            String leaderboard = input.ReadLine();
+            leaderboard = leaderboard.Replace("|", "\r\n");
+            txtbx_Leaderboard.Text = leaderboard;
         }
     }
 }
