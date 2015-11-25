@@ -157,6 +157,8 @@ namespace TriviaGameUser
                 //show user all correct answers
                 Answers answersForm = new Answers(input, output);
                 answersForm.Show();
+                //Get the leaderboard
+
                 //show user the leaderboard
                 Leaderboard leaderboardForm = new Leaderboard(leaderboard);
                 leaderboardForm.Show();

@@ -384,6 +384,64 @@ namespace TriviaGameDabaseService
             return response;
         }
 
+        public void UpdateQuestionAndAnswer (int questionNumber, String question, String answer1, String answer2, String answer3, String answer4, int correctAnswer)
+        {
+            try
+            {
+                if (sqlConnection.State == ConnectionState.Open)
+                {
+                    String currentScoreQuery = "DELETE FROM TestAnswers WHERE QuestionNumber = " + questionNumber + ";";
+
+                    if (correctAnswer == 1)
+                    {
+                        currentScoreQuery += "INSERT INTO TestAnswers (QuestionNumber, Answer, IsCorrect) VALUES (" + questionNumber + ", " + answer1 + ", TRUE);";
+                        currentScoreQuery += "INSERT INTO TestAnswers (QuestionNumber, Answer, IsCorrect) VALUES (" + questionNumber + ", " + answer2 + ", FALSE);";
+                        currentScoreQuery += "INSERT INTO TestAnswers (QuestionNumber, Answer, IsCorrect) VALUES (" + questionNumber + ", " + answer3 + ", FALSE);";
+                        currentScoreQuery += "INSERT INTO TestAnswers (QuestionNumber, Answer, IsCorrect) VALUES (" + questionNumber + ", " + answer4 + ", FALSE);";
+                    }
+
+                    else if (correctAnswer == 2)
+                    {
+                        currentScoreQuery += "INSERT INTO TestAnswers (QuestionNumber, Answer, IsCorrect) VALUES (" + questionNumber + ", " + answer1 + ", FALSE);";
+                        currentScoreQuery += "INSERT INTO TestAnswers (QuestionNumber, Answer, IsCorrect) VALUES (" + questionNumber + ", " + answer2 + ", TRUE);";
+                        currentScoreQuery += "INSERT INTO TestAnswers (QuestionNumber, Answer, IsCorrect) VALUES (" + questionNumber + ", " + answer3 + ", FALSE);";
+                        currentScoreQuery += "INSERT INTO TestAnswers (QuestionNumber, Answer, IsCorrect) VALUES (" + questionNumber + ", " + answer4 + ", FALSE);";
+                    }
+
+                    else if (correctAnswer == 3)
+                    {
+                        currentScoreQuery += "INSERT INTO TestAnswers (QuestionNumber, Answer, IsCorrect) VALUES (" + questionNumber + ", " + answer1 + ", FALSE);";
+                        currentScoreQuery += "INSERT INTO TestAnswers (QuestionNumber, Answer, IsCorrect) VALUES (" + questionNumber + ", " + answer2 + ", FALSE);";
+                        currentScoreQuery += "INSERT INTO TestAnswers (QuestionNumber, Answer, IsCorrect) VALUES (" + questionNumber + ", " + answer3 + ", TRUE);";
+                        currentScoreQuery += "INSERT INTO TestAnswers (QuestionNumber, Answer, IsCorrect) VALUES (" + questionNumber + ", " + answer4 + ", FALSE);";
+                    }
+                    else
+                    {
+                        currentScoreQuery += "INSERT INTO TestAnswers (QuestionNumber, Answer, IsCorrect) VALUES (" + questionNumber + ", " + answer1 + ", FALSE);";
+                        currentScoreQuery += "INSERT INTO TestAnswers (QuestionNumber, Answer, IsCorrect) VALUES (" + questionNumber + ", " + answer2 + ", FALSE);";
+                        currentScoreQuery += "INSERT INTO TestAnswers (QuestionNumber, Answer, IsCorrect) VALUES (" + questionNumber + ", " + answer3 + ", FALSE);";
+                        currentScoreQuery += "INSERT INTO TestAnswers (QuestionNumber, Answer, IsCorrect) VALUES (" + questionNumber + ", " + answer4 + ", TRUE);";
+                    }
+
+                    currentScoreQuery += "DELETE FROM TestQuestions WHERE QuestionNumber = " + questionNumber + ";";
+                    currentScoreQuery += "INSERT INTO TestQuestions (QuestionNumber, Question) VALUES (" + questionNumber + ", " + question + ");";
+
+                    Logger.Log("Created query: " + currentScoreQuery);
+                    MySqlCommand myCommand = new MySqlCommand(currentScoreQuery, sqlConnection);
+
+                    myCommand.ExecuteNonQuery();
+                }
+                else
+                {
+                    Logger.Log("Error: Connection not open");
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.Log("Exception: " + ex.Message);
+            }
+        }
+
         // see current status of participants ??
         public String GetCurrentStatus(int gameNumber)
         {

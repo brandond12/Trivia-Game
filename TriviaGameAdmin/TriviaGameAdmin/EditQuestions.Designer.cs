@@ -31,10 +31,10 @@
             this.lbl_Question = new System.Windows.Forms.Label();
             this.txtbx_question = new System.Windows.Forms.TextBox();
             this.grpbx_correctAnswer = new System.Windows.Forms.GroupBox();
-            this.rdbtn_Answer1 = new System.Windows.Forms.RadioButton();
-            this.rdbtn_Answer2 = new System.Windows.Forms.RadioButton();
-            this.rdbtn_Answer3 = new System.Windows.Forms.RadioButton();
             this.rdbtn_Answer4 = new System.Windows.Forms.RadioButton();
+            this.rdbtn_Answer3 = new System.Windows.Forms.RadioButton();
+            this.rdbtn_Answer2 = new System.Windows.Forms.RadioButton();
+            this.rdbtn_Answer1 = new System.Windows.Forms.RadioButton();
             this.lbl_CorrectAnswer = new System.Windows.Forms.Label();
             this.txtbx_Answer1 = new System.Windows.Forms.TextBox();
             this.txtbx_Answer2 = new System.Windows.Forms.TextBox();
@@ -44,7 +44,6 @@
             this.lbl_QuestionNumber = new System.Windows.Forms.Label();
             this.cmbbx_QuestionNumber = new System.Windows.Forms.ComboBox();
             this.btn_Submit = new System.Windows.Forms.Button();
-            this.btn_Close = new System.Windows.Forms.Button();
             this.grpbx_correctAnswer.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -76,25 +75,15 @@
             this.grpbx_correctAnswer.TabIndex = 3;
             this.grpbx_correctAnswer.TabStop = false;
             // 
-            // rdbtn_Answer1
+            // rdbtn_Answer4
             // 
-            this.rdbtn_Answer1.AutoSize = true;
-            this.rdbtn_Answer1.Location = new System.Drawing.Point(7, 20);
-            this.rdbtn_Answer1.Name = "rdbtn_Answer1";
-            this.rdbtn_Answer1.Size = new System.Drawing.Size(14, 13);
-            this.rdbtn_Answer1.TabIndex = 0;
-            this.rdbtn_Answer1.TabStop = true;
-            this.rdbtn_Answer1.UseVisualStyleBackColor = true;
-            // 
-            // rdbtn_Answer2
-            // 
-            this.rdbtn_Answer2.AutoSize = true;
-            this.rdbtn_Answer2.Location = new System.Drawing.Point(7, 62);
-            this.rdbtn_Answer2.Name = "rdbtn_Answer2";
-            this.rdbtn_Answer2.Size = new System.Drawing.Size(14, 13);
-            this.rdbtn_Answer2.TabIndex = 1;
-            this.rdbtn_Answer2.TabStop = true;
-            this.rdbtn_Answer2.UseVisualStyleBackColor = true;
+            this.rdbtn_Answer4.AutoSize = true;
+            this.rdbtn_Answer4.Location = new System.Drawing.Point(7, 146);
+            this.rdbtn_Answer4.Name = "rdbtn_Answer4";
+            this.rdbtn_Answer4.Size = new System.Drawing.Size(14, 13);
+            this.rdbtn_Answer4.TabIndex = 3;
+            this.rdbtn_Answer4.TabStop = true;
+            this.rdbtn_Answer4.UseVisualStyleBackColor = true;
             // 
             // rdbtn_Answer3
             // 
@@ -106,15 +95,25 @@
             this.rdbtn_Answer3.TabStop = true;
             this.rdbtn_Answer3.UseVisualStyleBackColor = true;
             // 
-            // rdbtn_Answer4
+            // rdbtn_Answer2
             // 
-            this.rdbtn_Answer4.AutoSize = true;
-            this.rdbtn_Answer4.Location = new System.Drawing.Point(7, 146);
-            this.rdbtn_Answer4.Name = "rdbtn_Answer4";
-            this.rdbtn_Answer4.Size = new System.Drawing.Size(14, 13);
-            this.rdbtn_Answer4.TabIndex = 3;
-            this.rdbtn_Answer4.TabStop = true;
-            this.rdbtn_Answer4.UseVisualStyleBackColor = true;
+            this.rdbtn_Answer2.AutoSize = true;
+            this.rdbtn_Answer2.Location = new System.Drawing.Point(7, 62);
+            this.rdbtn_Answer2.Name = "rdbtn_Answer2";
+            this.rdbtn_Answer2.Size = new System.Drawing.Size(14, 13);
+            this.rdbtn_Answer2.TabIndex = 1;
+            this.rdbtn_Answer2.TabStop = true;
+            this.rdbtn_Answer2.UseVisualStyleBackColor = true;
+            // 
+            // rdbtn_Answer1
+            // 
+            this.rdbtn_Answer1.AutoSize = true;
+            this.rdbtn_Answer1.Location = new System.Drawing.Point(7, 20);
+            this.rdbtn_Answer1.Name = "rdbtn_Answer1";
+            this.rdbtn_Answer1.Size = new System.Drawing.Size(14, 13);
+            this.rdbtn_Answer1.TabIndex = 0;
+            this.rdbtn_Answer1.TabStop = true;
+            this.rdbtn_Answer1.UseVisualStyleBackColor = true;
             // 
             // lbl_CorrectAnswer
             // 
@@ -190,21 +189,11 @@
             this.btn_Submit.UseVisualStyleBackColor = true;
             this.btn_Submit.Click += new System.EventHandler(this.btn_Submit_Click);
             // 
-            // btn_Close
-            // 
-            this.btn_Close.Location = new System.Drawing.Point(284, 283);
-            this.btn_Close.Name = "btn_Close";
-            this.btn_Close.Size = new System.Drawing.Size(75, 23);
-            this.btn_Close.TabIndex = 13;
-            this.btn_Close.Text = "Close";
-            this.btn_Close.UseVisualStyleBackColor = true;
-            // 
             // EditQuestions
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(452, 322);
-            this.Controls.Add(this.btn_Close);
             this.Controls.Add(this.btn_Submit);
             this.Controls.Add(this.cmbbx_QuestionNumber);
             this.Controls.Add(this.lbl_QuestionNumber);
@@ -245,6 +234,5 @@
         private System.Windows.Forms.Label lbl_QuestionNumber;
         private System.Windows.Forms.ComboBox cmbbx_QuestionNumber;
         private System.Windows.Forms.Button btn_Submit;
-        private System.Windows.Forms.Button btn_Close;
     }
 }

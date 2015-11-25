@@ -400,6 +400,9 @@ namespace TriviaGameDabaseService
                         int correctAnswer = Int32.Parse(input.ReadLine());
 
                         //send question to database
+                        dal.OpenConnection();
+                        dal.UpdateQuestionAndAnswer(questionNumber, question, answer1, answer2, answer3, answer4, correctAnswer);
+                        dal.CloseConnection();
 
                         output.WriteLine("ok");
                         output.Flush();
