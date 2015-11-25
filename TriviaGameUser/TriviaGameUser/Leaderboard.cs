@@ -20,6 +20,7 @@ namespace TriviaGameUser
         public Leaderboard(string leaderboard)
         {
             InitializeComponent();
+            leaderboard = leaderboard.Replace("|", "\r\n");
             txtbx_Leaderboard.Text = leaderboard;
         }
 
