@@ -3,27 +3,68 @@ using System.Collections.Generic;
 using System.Text;
 using System.Data;
 using MySql.Data.MySqlClient;
+using System.IO;
 
 namespace TriviaGameDabaseService
 {
     class DAL
     {
         private MySqlConnection sqlConnection;
-
         public DAL()
         {
-            // How the database is accessed shouldn't be hardcoded, but for now it shall be
-            String server = "localhost";
-            String database = "TriviaGame";
-            String uID = "root";
-            String password = "root";
-
-            String connectionString = "server=" + server + ";" +
-                                      "database=" + database + ";" +
-                                      "uid=" + uID + ";" +
-                                      "pwd=" + password + ";";
-
+            String filePath = @"C:\databaseConnectionInfo.txt";
+            String connectionString = this.GetConnectionString(filePath);
             sqlConnection = new MySqlConnection(connectionString);
+        }
+
+        private String GetConnectionString(String filePath)
+        {
+            String fileLine;
+            String server = "";
+            String database = "";
+            String uID = "";
+            String password = "";
+            String[] connectionPairs;
+            String connectionString = "";
+
+            try
+            {   // Open the text file using a stream reader
+                using (StreamReader sr = new StreamReader(filePath))
+                {
+                    while (sr.Peek() >= 0)
+                    {
+                        fileLine = sr.ReadLine();
+                        connectionPairs = fileLine.Split('=');
+                        if (connectionPairs[0] == "server")
+                        {
+                            server = connectionPairs[1];
+                        }
+                        else if (connectionPairs[0] == "database")
+                        {
+                            database = connectionPairs[1];
+                        }
+                        else if (connectionPairs[0] == "uID")
+                        {
+                            uID = connectionPairs[1];
+                        }
+                        else if (connectionPairs[0] == "password")
+                        {
+                            password = connectionPairs[1];
+                        }
+                    }
+
+                    connectionString = "server=" + server + ";" +
+                                       "database=" + database + ";" +
+                                       "uid=" + uID + ";" +
+                                       "pwd=" + password + ";";
+                }
+            }
+            catch (Exception)
+            {
+                Logger.Log("The connection string to the database failed.");
+                connectionString = "";
+            }
+            return connectionString;
         }
 
         public void OpenConnection()
