@@ -459,6 +459,10 @@ namespace TriviaGameDabaseService
                         Logger.Log("Pipe: " + clientPipeName + "Command not recognized");
                     }
                 }
+                //when the loop is done then the user is no longer active
+                dal.OpenConnection();
+                dal.SetUserToInactive(userName);
+                dal.CloseConnection();
             }
             catch(Exception ex)
             {
