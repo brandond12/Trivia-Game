@@ -37,7 +37,14 @@ namespace TriviaGameAdmin
                 output.WriteLine("GetCurrentStatus.");
                 output.Flush();
                 MyCallback callback = new MyCallback(txtbxInvoke);        // Callback is instance of delegate
-                Invoke(callback, new object[] { input.ReadLine() });
+                try
+                {
+                    Invoke(callback, new object[] { input.ReadLine() });
+                }
+                catch (Exception)
+                {
+                    //form has closed
+                }
                 Thread.Sleep(1000);
             }
         }

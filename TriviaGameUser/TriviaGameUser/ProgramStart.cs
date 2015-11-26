@@ -62,7 +62,7 @@ namespace TriviaGameUser
                     output.WriteLine(Environment.MachineName);
                     output.Flush();
 
-                    server = new NamedPipeServerStream("UserOutgoing", PipeDirection.InOut, 1, PipeTransmissionMode.Byte, PipeOptions.Asynchronous, 500, 500, ps);
+                    server = new NamedPipeServerStream("UserOutgoing", PipeDirection.InOut, 1, PipeTransmissionMode.Byte, PipeOptions.Asynchronous, 5000, 5000, ps);
                     server.WaitForConnection();
                     input = new StreamReader(server);
 

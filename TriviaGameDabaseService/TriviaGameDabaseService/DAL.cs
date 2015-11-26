@@ -384,50 +384,63 @@ namespace TriviaGameDabaseService
 
         public void UpdateQuestionAndAnswer (int questionNumber, String question, String answer1, String answer2, String answer3, String answer4, int correctAnswer)
         {
+            String currentScoreQuery = "";
             try
             {
                 if (sqlConnection.State == ConnectionState.Open)
                 {
-                    String currentScoreQuery = "DELETE FROM UserAnswer; DELETE FROM UserGames; DELETE FROM Users; DELETE FROM TestAnswers WHERE QuestionNumber = " + questionNumber + ";";
+                    MySqlCommand myCommand = new MySqlCommand();
+
+                    currentScoreQuery =
+                        "DELETE FROM UserAnswer; " +
+                        "DELETE FROM UserGames; " +
+                        "DELETE FROM Users; " +
+                        "DELETE FROM TestAnswers WHERE QuestionNumber = " + questionNumber + "; " +
+                        "DELETE FROM TestQuestions WHERE QuestionNumber = " + questionNumber + "; " +
+                        "INSERT INTO TestQuestions (QuestionNumber, Question) VALUES (" + questionNumber + ", '" + question + "'); ";
 
                     if (correctAnswer == 1)
                     {
-                        currentScoreQuery += "INSERT INTO TestAnswers (QuestionNumber, Answer, IsCorrect) VALUES (" + questionNumber + ", '" + answer1 + "', TRUE);";
-                        currentScoreQuery += "INSERT INTO TestAnswers (QuestionNumber, Answer, IsCorrect) VALUES (" + questionNumber + ", '" + answer2 + "', FALSE);";
-                        currentScoreQuery += "INSERT INTO TestAnswers (QuestionNumber, Answer, IsCorrect) VALUES (" + questionNumber + ", '" + answer3 + "', FALSE);";
-                        currentScoreQuery += "INSERT INTO TestAnswers (QuestionNumber, Answer, IsCorrect) VALUES (" + questionNumber + ", '" + answer4 + "', FALSE);";
+                        currentScoreQuery += "INSERT INTO TestAnswers (QuestionNumber, Answer, IsCorrect) VALUES (" + questionNumber + ", '" + answer1 + "', TRUE); ";
+                        currentScoreQuery += "INSERT INTO TestAnswers (QuestionNumber, Answer, IsCorrect) VALUES (" + questionNumber + ", '" + answer2 + "', FALSE); ";
+                        currentScoreQuery += "INSERT INTO TestAnswers (QuestionNumber, Answer, IsCorrect) VALUES (" + questionNumber + ", '" + answer3 + "', FALSE); ";
+                        currentScoreQuery += "INSERT INTO TestAnswers (QuestionNumber, Answer, IsCorrect) VALUES (" + questionNumber + ", '" + answer4 + "', FALSE); ";
                     }
 
                     else if (correctAnswer == 2)
                     {
-                        currentScoreQuery += "INSERT INTO TestAnswers (QuestionNumber, Answer, IsCorrect) VALUES (" + questionNumber + ", '" + answer1 + "', FALSE);";
-                        currentScoreQuery += "INSERT INTO TestAnswers (QuestionNumber, Answer, IsCorrect) VALUES (" + questionNumber + ", '" + answer2 + "', TRUE);";
-                        currentScoreQuery += "INSERT INTO TestAnswers (QuestionNumber, Answer, IsCorrect) VALUES (" + questionNumber + ", '" + answer3 + "', FALSE);";
-                        currentScoreQuery += "INSERT INTO TestAnswers (QuestionNumber, Answer, IsCorrect) VALUES (" + questionNumber + ", '" + answer4 + "', FALSE);";
+                        currentScoreQuery += "INSERT INTO TestAnswers (QuestionNumber, Answer, IsCorrect) VALUES (" + questionNumber + ", '" + answer1 + "', FALSE); ";
+                        currentScoreQuery += "INSERT INTO TestAnswers (QuestionNumber, Answer, IsCorrect) VALUES (" + questionNumber + ", '" + answer2 + "', TRUE); ";
+                        currentScoreQuery += "INSERT INTO TestAnswers (QuestionNumber, Answer, IsCorrect) VALUES (" + questionNumber + ", '" + answer3 + "', FALSE); ";
+                        currentScoreQuery += "INSERT INTO TestAnswers (QuestionNumber, Answer, IsCorrect) VALUES (" + questionNumber + ", '" + answer4 + "', FALSE); ";
                     }
 
                     else if (correctAnswer == 3)
                     {
-                        currentScoreQuery += "INSERT INTO TestAnswers (QuestionNumber, Answer, IsCorrect) VALUES (" + questionNumber + ", '" + answer1 + "', FALSE);";
-                        currentScoreQuery += "INSERT INTO TestAnswers (QuestionNumber, Answer, IsCorrect) VALUES (" + questionNumber + ", '" + answer2 + "', FALSE);";
-                        currentScoreQuery += "INSERT INTO TestAnswers (QuestionNumber, Answer, IsCorrect) VALUES (" + questionNumber + ", '" + answer3 + "', TRUE);";
-                        currentScoreQuery += "INSERT INTO TestAnswers (QuestionNumber, Answer, IsCorrect) VALUES (" + questionNumber + ", '" + answer4 + "', FALSE);";
+                        currentScoreQuery += "INSERT INTO TestAnswers (QuestionNumber, Answer, IsCorrect) VALUES (" + questionNumber + ", '" + answer1 + "', FALSE); ";
+                        currentScoreQuery += "INSERT INTO TestAnswers (QuestionNumber, Answer, IsCorrect) VALUES (" + questionNumber + ", '" + answer2 + "', FALSE); ";
+                        currentScoreQuery += "INSERT INTO TestAnswers (QuestionNumber, Answer, IsCorrect) VALUES (" + questionNumber + ", '" + answer3 + "', TRUE); ";
+                        currentScoreQuery += "INSERT INTO TestAnswers (QuestionNumber, Answer, IsCorrect) VALUES (" + questionNumber + ", '" + answer4 + "', FALSE); ";
                     }
                     else
                     {
-                        currentScoreQuery += "INSERT INTO TestAnswers (QuestionNumber, Answer, IsCorrect) VALUES (" + questionNumber + ", '" + answer1 + "', FALSE);";
-                        currentScoreQuery += "INSERT INTO TestAnswers (QuestionNumber, Answer, IsCorrect) VALUES (" + questionNumber + ", '" + answer2 + "', FALSE);";
-                        currentScoreQuery += "INSERT INTO TestAnswers (QuestionNumber, Answer, IsCorrect) VALUES (" + questionNumber + ", '" + answer3 + "', FALSE);";
-                        currentScoreQuery += "INSERT INTO TestAnswers (QuestionNumber, Answer, IsCorrect) VALUES (" + questionNumber + ", '" + answer4 + "', TRUE);";
+                        currentScoreQuery += "INSERT INTO TestAnswers (QuestionNumber, Answer, IsCorrect) VALUES (" + questionNumber + ", '" + answer1 + "', FALSE); ";
+                        currentScoreQuery += "INSERT INTO TestAnswers (QuestionNumber, Answer, IsCorrect) VALUES (" + questionNumber + ", '" + answer2 + "', FALSE); ";
+                        currentScoreQuery += "INSERT INTO TestAnswers (QuestionNumber, Answer, IsCorrect) VALUES (" + questionNumber + ", '" + answer3 + "', FALSE); ";
+                        currentScoreQuery += "INSERT INTO TestAnswers (QuestionNumber, Answer, IsCorrect) VALUES (" + questionNumber + ", '" + answer4 + "', TRUE); ";
                     }
 
-                    currentScoreQuery += "DELETE FROM TestQuestions WHERE QuestionNumber = " + questionNumber + ";";
-                    currentScoreQuery += "INSERT INTO TestQuestions (QuestionNumber, Question) VALUES (" + questionNumber + ", " + question + ");";
-
                     Logger.Log("Created query: " + currentScoreQuery);
-                    MySqlCommand myCommand = new MySqlCommand(currentScoreQuery, sqlConnection);
+                    try
+                    {
+                        myCommand = new MySqlCommand(currentScoreQuery, sqlConnection);
 
-                    myCommand.ExecuteNonQuery();
+                        myCommand.ExecuteNonQuery();
+                    }
+                    catch(Exception)
+                    {
+                        Logger.Log("Error: MySql failed");
+                    }
                 }
                 else
                 {
@@ -436,7 +449,7 @@ namespace TriviaGameDabaseService
             }
             catch (Exception ex)
             {
-                Logger.Log("Exception: " + ex.Message);
+                Logger.Log("Exception: " + ex.Message + currentScoreQuery);
             }
         }
 

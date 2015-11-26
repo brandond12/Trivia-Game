@@ -151,17 +151,19 @@ namespace TriviaGameUser
             else//no more questions in test
             {
                 //end game
+                //show user score
+                MessageBox.Show("Your score is: " + gameScore, "End Game");
                 //send service final score
                 sendGameScore();
                 Thread.Sleep(200);//allow server time complete actions
                 //show user all correct answers
                 Answers answersForm = new Answers(input, output);
-                answersForm.Show();
+                answersForm.ShowDialog();
                 //Get the leaderboard
 
                 //show user the leaderboard
                 Leaderboard leaderboardForm = new Leaderboard(leaderboard);
-                leaderboardForm.Show();
+                leaderboardForm.ShowDialog();
 
                 //clear Board
                 questionNumber = 1;
@@ -322,6 +324,12 @@ namespace TriviaGameUser
         private void lbl_answer4_Click(object sender, EventArgs e)
         {
             rad_Answer4.PerformClick();
+        }
+
+        private void QuestionWindow_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            output.WriteLine("Quit.");
+            output.Flush();
         }
     }
 }

@@ -149,7 +149,7 @@ namespace TriviaGameDabaseService
             ps.AddAccessRule(par);
 
             //start server
-            server = new NamedPipeServerStream("ServiceOutgoing", PipeDirection.InOut, 1, PipeTransmissionMode.Byte, PipeOptions.Asynchronous, 500, 500, ps);
+            server = new NamedPipeServerStream("ServiceOutgoing", PipeDirection.InOut, 1, PipeTransmissionMode.Byte, PipeOptions.Asynchronous, 5000, 5000, ps);
 
             while(!Done)
             {
@@ -236,7 +236,7 @@ namespace TriviaGameDabaseService
             Logger.Log("Client thread started");
 
             //wait for user to connect
-            server = new NamedPipeServerStream(clientPipeName + "service", PipeDirection.InOut, 1, PipeTransmissionMode.Byte, PipeOptions.Asynchronous, 500, 500, ps);
+            server = new NamedPipeServerStream(clientPipeName + "service", PipeDirection.InOut, 1, PipeTransmissionMode.Byte, PipeOptions.Asynchronous, 5000, 5000, ps);
             server.WaitForConnection();
             input = new StreamReader(server);
 
@@ -258,8 +258,8 @@ namespace TriviaGameDabaseService
                 while (!Done)
                 {
                     //async read from pipe
-                    char[] temp = new char[1023];
-                    await input.ReadAsync(temp, 0, 1023);
+                    char[] temp = new char[5000];
+                    await input.ReadAsync(temp, 0, 5000);
                     //move data from pipe to a string (padded with somthing, not sure what)
                     string userCommand = new string(temp);
                     //all commands end in a period. if there is no period then the user left
@@ -468,6 +468,10 @@ namespace TriviaGameDabaseService
             {
                 Logger.Log("Pipe: " + clientPipeName + " unknown error: " + ex.Message);
                 clients.DeleteClient((string)clientPipeName);
+
+                dal.OpenConnection();
+                dal.SetUserToInactive(userName);
+                dal.CloseConnection();
             }
         }
     }

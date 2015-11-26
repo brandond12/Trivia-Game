@@ -168,6 +168,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "QuestionWindow";
             this.Text = "Questions";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.QuestionWindow_FormClosing);
             this.GrpBx_AnswerSelection.ResumeLayout(false);
             this.GrpBx_AnswerSelection.PerformLayout();
             this.ResumeLayout(false);
