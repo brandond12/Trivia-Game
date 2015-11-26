@@ -25,3 +25,4 @@ C:\Trivia-Game-Merging\trunk\TriviaGameAdmin\TriviaGameAdmin\obj\Debug\TriviaGam
 C:\Trivia-Game-Merging\trunk\TriviaGameAdmin\TriviaGameAdmin\obj\Debug\TriviaGameAdmin.ProgramStart.resources
 C:\Trivia-Game-Merging\trunk\TriviaGameAdmin\TriviaGameAdmin\obj\Debug\TriviaGameAdmin.Properties.Resources.resources
 C:\Trivia-Game-Merging\trunk\TriviaGameAdmin\TriviaGameAdmin\obj\Debug\TriviaGameAdmin.csproj.GenerateResource.Cache
+F:\Repository\Trivia-Game\trunk\TriviaGameAdmin\TriviaGameAdmin\obj\Debug\TriviaGameAdmin.csproj.ResolveComReference.cache

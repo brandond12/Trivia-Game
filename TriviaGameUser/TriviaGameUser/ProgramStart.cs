@@ -42,34 +42,43 @@ namespace TriviaGameUser
         {
             if (txtbx_serverName.Text.Length > 0 && txtbx_userName.Text.Length > 0)
             {
-                //save the data in the text boxes
-                userName = txtbx_userName.Text;
-                serverName = txtbx_serverName.Text;
-                //set up the named pipe security
-                PipeSecurity ps = new PipeSecurity();
-                System.Security.Principal.SecurityIdentifier sid = new System.Security.Principal.SecurityIdentifier(System.Security.Principal.WellKnownSidType.WorldSid, null);
-                PipeAccessRule par = new PipeAccessRule(sid, PipeAccessRights.ReadWrite, System.Security.AccessControl.AccessControlType.Allow);
-                ps.AddAccessRule(par);
+                try
+                {
+                    //save the data in the text boxes
+                    userName = txtbx_userName.Text;
+                    serverName = txtbx_serverName.Text;
+                    //set up the named pipe security
+                    PipeSecurity ps = new PipeSecurity();
+                    System.Security.Principal.SecurityIdentifier sid = new System.Security.Principal.SecurityIdentifier(System.Security.Principal.WellKnownSidType.WorldSid, null);
+                    PipeAccessRule par = new PipeAccessRule(sid, PipeAccessRights.ReadWrite, System.Security.AccessControl.AccessControlType.Allow);
+                    ps.AddAccessRule(par);
 
-                //connect to service
-                client = new NamedPipeClientStream("ServiceOutgoing");//add server name
-                client.Connect();
-                output = new StreamWriter(client);
+                    //connect to service
+                    client = new NamedPipeClientStream("ServiceOutgoing");//add server name
+                    client.Connect(100);
+                    output = new StreamWriter(client);
 
-                //tell ther service this computers name
-                output.WriteLine(Environment.MachineName);
-                output.Flush();
+                    //tell ther service this computers name
+                    output.WriteLine(Environment.MachineName);
+                    output.Flush();
 
-                server = new NamedPipeServerStream("UserOutgoing", PipeDirection.InOut, 1, PipeTransmissionMode.Byte, PipeOptions.Asynchronous, 500, 500, ps);
-                server.WaitForConnection();
-                input = new StreamReader(server);
+                    server = new NamedPipeServerStream("UserOutgoing", PipeDirection.InOut, 1, PipeTransmissionMode.Byte, PipeOptions.Asynchronous, 500, 500, ps);
+                    server.WaitForConnection();
+                    input = new StreamReader(server);
 
-                //get namedPipe Name
-                pipeName = input.ReadLine();
+                    //get namedPipe Name
+                    pipeName = input.ReadLine();
 
-                server.Disconnect();
-                server.Dispose();
-                Close();
+                    server.Disconnect();
+                    server.Dispose();
+                    Close();
+                }
+                catch(Exception)
+                {
+                    MessageBox.Show("Failed to connect to Server", "Error");
+                    server.Disconnect();
+                    server.Dispose();
+                }
             }
         }
 

@@ -58,7 +58,7 @@
             // chkbx_answer1
             // 
             this.chkbx_answer1.AutoSize = true;
-            this.chkbx_answer1.Location = new System.Drawing.Point(16, 40);
+            this.chkbx_answer1.Location = new System.Drawing.Point(12, 39);
             this.chkbx_answer1.Name = "chkbx_answer1";
             this.chkbx_answer1.Size = new System.Drawing.Size(70, 17);
             this.chkbx_answer1.TabIndex = 2;
@@ -68,7 +68,7 @@
             // chkbx_answer2
             // 
             this.chkbx_answer2.AutoSize = true;
-            this.chkbx_answer2.Location = new System.Drawing.Point(16, 73);
+            this.chkbx_answer2.Location = new System.Drawing.Point(12, 73);
             this.chkbx_answer2.Name = "chkbx_answer2";
             this.chkbx_answer2.Size = new System.Drawing.Size(70, 17);
             this.chkbx_answer2.TabIndex = 3;
@@ -117,6 +117,7 @@
             this.Controls.Add(this.chkbx_answer1);
             this.Controls.Add(this.lbl_gameQuestion);
             this.Controls.Add(this.lbl_questionLable);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "Answers";
             this.Text = "Answers";
             this.ResumeLayout(false);

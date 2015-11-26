@@ -70,6 +70,7 @@
             this.Controls.Add(this.btn_Close);
             this.Controls.Add(this.txtbx_Leaderboard);
             this.Controls.Add(this.lbl_Leaderboard);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "Leaderboard";
             this.Text = "EndGame";
             this.ResumeLayout(false);

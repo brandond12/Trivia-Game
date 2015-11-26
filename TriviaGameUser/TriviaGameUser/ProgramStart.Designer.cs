@@ -90,6 +90,7 @@
             this.Controls.Add(this.txtbx_userName);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.lbl_UserName);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "ProgramStart";
             this.Text = "ProgramStart";
             this.ResumeLayout(false);

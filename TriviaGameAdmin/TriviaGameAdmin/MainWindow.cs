@@ -31,7 +31,7 @@ namespace TriviaGameAdmin
 
             //connect to service
             client = new NamedPipeClientStream(pipeName + "service");//naming convention for pipe is given name(pipeName) and who has the server (service or user)
-            client.Connect();
+            client.Connect(30);
             output = new StreamWriter(client);
 
             //tell service the name of the computer to connect back to

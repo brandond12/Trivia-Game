@@ -68,7 +68,7 @@ namespace TriviaGameUser
 
             //connect to service
             client = new NamedPipeClientStream(pipeName + "service");//naming convention for pipe is given name(pipeName) and who has the server (service or user)
-            client.Connect();
+            client.Connect(30);
             output = new StreamWriter(client);
 
             //tell service the name of the computer to connect back to
@@ -82,7 +82,7 @@ namespace TriviaGameUser
             Thread.Sleep(100);//allow server time complete actions
             //tell service name of new user
             newUser();
-            Thread.Sleep(100);//allow server time complete actions
+            Thread.Sleep(200);//allow server time complete actions
             //get the first question
             getGameQuestion();
             //start score counter
@@ -153,7 +153,7 @@ namespace TriviaGameUser
                 //end game
                 //send service final score
                 sendGameScore();
-                Thread.Sleep(100);//allow server time complete actions
+                Thread.Sleep(200);//allow server time complete actions
                 //show user all correct answers
                 Answers answersForm = new Answers(input, output);
                 answersForm.Show();
@@ -169,6 +169,7 @@ namespace TriviaGameUser
                 //restart
                 getGameQuestion();
             }
+            Thread.Sleep(100);
         }
 
         /*
@@ -301,6 +302,26 @@ namespace TriviaGameUser
             {
                 timer.Stop();
             }
+        }
+
+        private void lbl_answer1_Click(object sender, EventArgs e)
+        {
+            rad_Answer1.PerformClick();
+        }
+
+        private void lbl_answer2_Click(object sender, EventArgs e)
+        {
+            rad_Answer2.PerformClick();
+        }
+
+        private void lbl_answer3_Click(object sender, EventArgs e)
+        {
+            rad_Answer3.PerformClick();
+        }
+
+        private void lbl_answer4_Click(object sender, EventArgs e)
+        {
+            rad_Answer4.PerformClick();
         }
     }
 }

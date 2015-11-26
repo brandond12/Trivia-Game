@@ -14,9 +14,16 @@ namespace TriviaGameAdmin
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            ProgramStart gameStart = new ProgramStart();
-            Application.Run(gameStart);
-            Application.Run(new MainWindow(gameStart.getUserName(), gameStart.getServerName(), gameStart.getPipeName()));
+            try
+            {
+                ProgramStart gameStart = new ProgramStart();
+                Application.Run(gameStart);
+                Application.Run(new MainWindow(gameStart.getUserName(), gameStart.getServerName(), gameStart.getPipeName()));
+            }
+            catch(Exception)
+            {
+                //the program was closed before starting
+            }
         }
     }
 }

@@ -301,6 +301,7 @@ namespace TriviaGameDabaseService
                     }
                     else if (userCommand == "GetQuestion")
                     {
+                        Logger.Log("Pipe: " + clientPipeName + "in GetQuestion command code.");
                         string[] splitbuffer = new string[5];
                         
                         //read in question number

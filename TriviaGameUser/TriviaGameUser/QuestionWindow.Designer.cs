@@ -111,6 +111,7 @@
             this.lbl_answer1.Size = new System.Drawing.Size(51, 13);
             this.lbl_answer1.TabIndex = 2;
             this.lbl_answer1.Text = "Answer 1";
+            this.lbl_answer1.Click += new System.EventHandler(this.lbl_answer1_Click);
             // 
             // lbl_answer2
             // 
@@ -120,6 +121,7 @@
             this.lbl_answer2.Size = new System.Drawing.Size(51, 13);
             this.lbl_answer2.TabIndex = 3;
             this.lbl_answer2.Text = "Answer 2";
+            this.lbl_answer2.Click += new System.EventHandler(this.lbl_answer2_Click);
             // 
             // lbl_answer3
             // 
@@ -129,6 +131,7 @@
             this.lbl_answer3.Size = new System.Drawing.Size(51, 13);
             this.lbl_answer3.TabIndex = 4;
             this.lbl_answer3.Text = "Answer 3";
+            this.lbl_answer3.Click += new System.EventHandler(this.lbl_answer3_Click);
             // 
             // lbl_answer4
             // 
@@ -138,10 +141,11 @@
             this.lbl_answer4.Size = new System.Drawing.Size(51, 13);
             this.lbl_answer4.TabIndex = 5;
             this.lbl_answer4.Text = "Answer 4";
+            this.lbl_answer4.Click += new System.EventHandler(this.lbl_answer4_Click);
             // 
             // btn_submit
             // 
-            this.btn_submit.Location = new System.Drawing.Point(376, 276);
+            this.btn_submit.Location = new System.Drawing.Point(376, 256);
             this.btn_submit.Name = "btn_submit";
             this.btn_submit.Size = new System.Drawing.Size(75, 23);
             this.btn_submit.TabIndex = 6;
@@ -153,7 +157,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(463, 311);
+            this.ClientSize = new System.Drawing.Size(463, 291);
             this.Controls.Add(this.btn_submit);
             this.Controls.Add(this.lbl_answer4);
             this.Controls.Add(this.lbl_answer3);
@@ -161,6 +165,7 @@
             this.Controls.Add(this.lbl_answer1);
             this.Controls.Add(this.GrpBx_AnswerSelection);
             this.Controls.Add(this.lbl_Question);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "QuestionWindow";
             this.Text = "Questions";
             this.GrpBx_AnswerSelection.ResumeLayout(false);

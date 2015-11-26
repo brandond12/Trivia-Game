@@ -388,37 +388,37 @@ namespace TriviaGameDabaseService
             {
                 if (sqlConnection.State == ConnectionState.Open)
                 {
-                    String currentScoreQuery = "DELETE FROM TestAnswers WHERE QuestionNumber = " + questionNumber + ";";
+                    String currentScoreQuery = "DELETE FROM UserAnswer; DELETE FROM UserGames; DELETE FROM Users; DELETE FROM TestAnswers WHERE QuestionNumber = " + questionNumber + ";";
 
                     if (correctAnswer == 1)
                     {
-                        currentScoreQuery += "INSERT INTO TestAnswers (QuestionNumber, Answer, IsCorrect) VALUES (" + questionNumber + ", " + answer1 + ", TRUE);";
-                        currentScoreQuery += "INSERT INTO TestAnswers (QuestionNumber, Answer, IsCorrect) VALUES (" + questionNumber + ", " + answer2 + ", FALSE);";
-                        currentScoreQuery += "INSERT INTO TestAnswers (QuestionNumber, Answer, IsCorrect) VALUES (" + questionNumber + ", " + answer3 + ", FALSE);";
-                        currentScoreQuery += "INSERT INTO TestAnswers (QuestionNumber, Answer, IsCorrect) VALUES (" + questionNumber + ", " + answer4 + ", FALSE);";
+                        currentScoreQuery += "INSERT INTO TestAnswers (QuestionNumber, Answer, IsCorrect) VALUES (" + questionNumber + ", '" + answer1 + "', TRUE);";
+                        currentScoreQuery += "INSERT INTO TestAnswers (QuestionNumber, Answer, IsCorrect) VALUES (" + questionNumber + ", '" + answer2 + "', FALSE);";
+                        currentScoreQuery += "INSERT INTO TestAnswers (QuestionNumber, Answer, IsCorrect) VALUES (" + questionNumber + ", '" + answer3 + "', FALSE);";
+                        currentScoreQuery += "INSERT INTO TestAnswers (QuestionNumber, Answer, IsCorrect) VALUES (" + questionNumber + ", '" + answer4 + "', FALSE);";
                     }
 
                     else if (correctAnswer == 2)
                     {
-                        currentScoreQuery += "INSERT INTO TestAnswers (QuestionNumber, Answer, IsCorrect) VALUES (" + questionNumber + ", " + answer1 + ", FALSE);";
-                        currentScoreQuery += "INSERT INTO TestAnswers (QuestionNumber, Answer, IsCorrect) VALUES (" + questionNumber + ", " + answer2 + ", TRUE);";
-                        currentScoreQuery += "INSERT INTO TestAnswers (QuestionNumber, Answer, IsCorrect) VALUES (" + questionNumber + ", " + answer3 + ", FALSE);";
-                        currentScoreQuery += "INSERT INTO TestAnswers (QuestionNumber, Answer, IsCorrect) VALUES (" + questionNumber + ", " + answer4 + ", FALSE);";
+                        currentScoreQuery += "INSERT INTO TestAnswers (QuestionNumber, Answer, IsCorrect) VALUES (" + questionNumber + ", '" + answer1 + "', FALSE);";
+                        currentScoreQuery += "INSERT INTO TestAnswers (QuestionNumber, Answer, IsCorrect) VALUES (" + questionNumber + ", '" + answer2 + "', TRUE);";
+                        currentScoreQuery += "INSERT INTO TestAnswers (QuestionNumber, Answer, IsCorrect) VALUES (" + questionNumber + ", '" + answer3 + "', FALSE);";
+                        currentScoreQuery += "INSERT INTO TestAnswers (QuestionNumber, Answer, IsCorrect) VALUES (" + questionNumber + ", '" + answer4 + "', FALSE);";
                     }
 
                     else if (correctAnswer == 3)
                     {
-                        currentScoreQuery += "INSERT INTO TestAnswers (QuestionNumber, Answer, IsCorrect) VALUES (" + questionNumber + ", " + answer1 + ", FALSE);";
-                        currentScoreQuery += "INSERT INTO TestAnswers (QuestionNumber, Answer, IsCorrect) VALUES (" + questionNumber + ", " + answer2 + ", FALSE);";
-                        currentScoreQuery += "INSERT INTO TestAnswers (QuestionNumber, Answer, IsCorrect) VALUES (" + questionNumber + ", " + answer3 + ", TRUE);";
-                        currentScoreQuery += "INSERT INTO TestAnswers (QuestionNumber, Answer, IsCorrect) VALUES (" + questionNumber + ", " + answer4 + ", FALSE);";
+                        currentScoreQuery += "INSERT INTO TestAnswers (QuestionNumber, Answer, IsCorrect) VALUES (" + questionNumber + ", '" + answer1 + "', FALSE);";
+                        currentScoreQuery += "INSERT INTO TestAnswers (QuestionNumber, Answer, IsCorrect) VALUES (" + questionNumber + ", '" + answer2 + "', FALSE);";
+                        currentScoreQuery += "INSERT INTO TestAnswers (QuestionNumber, Answer, IsCorrect) VALUES (" + questionNumber + ", '" + answer3 + "', TRUE);";
+                        currentScoreQuery += "INSERT INTO TestAnswers (QuestionNumber, Answer, IsCorrect) VALUES (" + questionNumber + ", '" + answer4 + "', FALSE);";
                     }
                     else
                     {
-                        currentScoreQuery += "INSERT INTO TestAnswers (QuestionNumber, Answer, IsCorrect) VALUES (" + questionNumber + ", " + answer1 + ", FALSE);";
-                        currentScoreQuery += "INSERT INTO TestAnswers (QuestionNumber, Answer, IsCorrect) VALUES (" + questionNumber + ", " + answer2 + ", FALSE);";
-                        currentScoreQuery += "INSERT INTO TestAnswers (QuestionNumber, Answer, IsCorrect) VALUES (" + questionNumber + ", " + answer3 + ", FALSE);";
-                        currentScoreQuery += "INSERT INTO TestAnswers (QuestionNumber, Answer, IsCorrect) VALUES (" + questionNumber + ", " + answer4 + ", TRUE);";
+                        currentScoreQuery += "INSERT INTO TestAnswers (QuestionNumber, Answer, IsCorrect) VALUES (" + questionNumber + ", '" + answer1 + "', FALSE);";
+                        currentScoreQuery += "INSERT INTO TestAnswers (QuestionNumber, Answer, IsCorrect) VALUES (" + questionNumber + ", '" + answer2 + "', FALSE);";
+                        currentScoreQuery += "INSERT INTO TestAnswers (QuestionNumber, Answer, IsCorrect) VALUES (" + questionNumber + ", '" + answer3 + "', FALSE);";
+                        currentScoreQuery += "INSERT INTO TestAnswers (QuestionNumber, Answer, IsCorrect) VALUES (" + questionNumber + ", '" + answer4 + "', TRUE);";
                     }
 
                     currentScoreQuery += "DELETE FROM TestQuestions WHERE QuestionNumber = " + questionNumber + ";";
