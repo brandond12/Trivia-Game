@@ -412,6 +412,7 @@ namespace TriviaGameDabaseService
                     {
                         Logger.Log("Pipe: " + clientPipeName + "in GetExcel command code");
 
+                        //send all of the questions
                         for (int counter = 0; counter < 10; counter++)
                         {
                             dal.OpenConnection();
@@ -421,6 +422,7 @@ namespace TriviaGameDabaseService
                             output.Flush();
                         }
 
+                        //send the average time to answer correctly
                         for (int counter = 0; counter < 10; counter++)
                         {
                             dal.OpenConnection();
@@ -430,7 +432,7 @@ namespace TriviaGameDabaseService
                             output.Flush();
                         }
 
-                        float[,] percentCorrect = new float[10, 10];
+                        //send the percent of users who answered correctly
                         for (int counter = 0; counter < 10; counter++)
                         {
                             dal.OpenConnection();
