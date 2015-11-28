@@ -1,0 +1,14 @@
+Bugs:
+Doesn’t work with multiple computers. You said this was ok since the named pipes weren’t acting properly, and that you would not take marks off.
+Install instructions:
+Install Database:
+	Run TriviaGameDatabaseCreation.sql to create the database
+	Run PopulateDatabase.sql to load sample data
+	The default user for the database is: name:  “root”, password : “root”. This can be changed by changing the databaseConnectionInfo.txt contents
+Install Service:
+	TriviaGameDabaseService.exe is a service that needs to be installed
+	databaseConnectionInfo.txt needs to be in the same directory as the services .exe. This contains the connection info for the database
+
+Now the admin and/or the user can be run. It will ask for your name and the server name. The default server name is “.”, this will work for local computers.
+When a question is changed with the admin, it clears all past games user data (names, answers, scores)
+
