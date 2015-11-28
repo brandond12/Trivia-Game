@@ -1,4 +1,13 @@
-﻿using System;
+﻿/*
+* FILE   : ProgramStart.cs
+* PROJECT  : PROG2120 - Windows and Mobile Programing - PROG 2110 Relation Database - Trivia Game 
+* PROGRAMMER : Brandon Davies - Lauren Machan
+* FIRST VERSION : 2015-11-27
+* DESCRIPTION : This is a form gets the user and server name,
+ *              Makes a temperary connection to the server and get what will be the dedicated pipe name
+*/
+
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -54,7 +63,7 @@ namespace TriviaGameUser
                     ps.AddAccessRule(par);
 
                     //connect to service
-                    client = new NamedPipeClientStream("ServiceOutgoing");//add server name
+                    client = new NamedPipeClientStream(serverName, "ServiceOutgoing");
                     client.Connect(100);
                     output = new StreamWriter(client);
 
@@ -82,16 +91,46 @@ namespace TriviaGameUser
             }
         }
 
+        /*
+        *METHOD		    :	getUserName
+        *
+        *DESCRIPTION	:	Getter for userName
+        *
+        *PARAMETERS		:	void
+        * 
+        *RETURNS		:	string userName
+        *
+        */
         public string getUserName()
         {
             return userName;
         }
 
+        /*
+        *METHOD		    :	getServerName
+        *
+        *DESCRIPTION	:	Getter for serverName
+        *
+        *PARAMETERS		:	void
+        * 
+        *RETURNS		:	string serverName
+        *
+        */
         public string getServerName()
         {
             return serverName;
         }
 
+        /*
+        *METHOD		    :	getPipeName
+        *
+        *DESCRIPTION	:	Getter for pipeName
+        *
+        *PARAMETERS		:	void
+        * 
+        *RETURNS		:	string pipeName
+        *
+        */
         public string getPipeName()
         {
             return pipeName;

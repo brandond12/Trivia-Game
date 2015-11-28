@@ -1,4 +1,12 @@
-﻿using System;
+﻿/*
+* FILE   : Leaderboard.cs
+* PROJECT  : PROG2120 - Windows and Mobile Programing - PROG 2110 Relation Database - Trivia Game 
+* PROGRAMMER : Brandon Davies - Lauren Machan
+* FIRST VERSION : 2015-11-27
+* DESCRIPTION : This is a form thats starts a thread that updates the currect status to the window
+*/
+
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -21,6 +29,18 @@ namespace TriviaGameAdmin
         StreamWriter output;
         Thread currentStatusThread;
         bool Done = false;
+
+        /*
+        *METHOD		    :	txtbxInvoke
+        *
+        *DESCRIPTION	:	Constructor for the Current status form/class
+        *
+        *PARAMETERS		:	StreamReader input          reader that reads in data from the service
+         *                  StreamWriter output         writer that will write to the service
+        *  
+        *RETURNS		:	
+        *
+        */
         public CurrentStatus(StreamReader input, StreamWriter output)
         {
             InitializeComponent();
@@ -30,6 +50,16 @@ namespace TriviaGameAdmin
             currentStatusThread.Start();
         }
 
+        /*
+        *METHOD		    :	CurrentStatusThread
+        *
+        *DESCRIPTION	:	Thread that will updat the current status
+        *
+        *PARAMETERS		:	void
+        *  
+        *RETURNS		:	void
+        *
+        */
         private void CurrentStatusThread()
         {
             while(!Done)
@@ -45,10 +75,21 @@ namespace TriviaGameAdmin
                 {
                     //form has closed
                 }
-                Thread.Sleep(1000);
+                Thread.Sleep(5000);
             }
         }
 
+        /*
+        *METHOD		    :	CurrentStatus_FormClosing
+        *
+        *DESCRIPTION	:	triggered by the form closing, closes the thread
+        *
+        *PARAMETERS		:	object sender:  Object relaying information on where the event call came from
+        *                   EventArgs e:    Object that contains data about the event
+        * 
+        *RETURNS		:	void
+        *
+        */
         private void CurrentStatus_FormClosing(object sender, FormClosingEventArgs e)
         {
             Done = true;

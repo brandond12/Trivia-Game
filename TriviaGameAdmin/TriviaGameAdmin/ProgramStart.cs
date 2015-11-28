@@ -1,4 +1,13 @@
-﻿using System;
+﻿/*
+* FILE   : ProgramStart.cs
+* PROJECT  : PROG2120 - Windows and Mobile Programing - PROG 2110 Relation Database - Trivia Game 
+* PROGRAMMER : Brandon Davies - Lauren Machan
+* FIRST VERSION : 2015-11-27
+* DESCRIPTION : This is a form gets the user and server name,
+ *              Makes a temperary connection to the server and get what will be the dedicated pipe name
+*/
+
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -21,11 +30,32 @@ namespace TriviaGameAdmin
         string serverName;
         string pipeName;
 
+        /*
+        *METHOD		    :	ProgramStart
+        *
+        *DESCRIPTION	:	Constructor for the Edit Question form/class
+        *
+        *PARAMETERS		:	void
+        *  
+        *RETURNS		:	
+        *
+        */
         public ProgramStart()
         {
             InitializeComponent();
         }
 
+        /*
+        *METHOD		    :	btn_submit_Click
+        *
+        *DESCRIPTION	:	used to send the new question to the service when submit clicked
+        *
+        *PARAMETERS		:	object sender:  Object relaying information on where the event call came from
+        *                   EventArgs e:    Object that contains data about the event
+        * 
+        *RETURNS		:	void
+        *
+        */
         private void btn_submit_Click(object sender, EventArgs e)
         {
             if (txtbx_server.Text.Length > 0 && txtbx_name.Text.Length > 0)
@@ -41,7 +71,7 @@ namespace TriviaGameAdmin
                     ps.AddAccessRule(par);
 
                     //connect to service
-                    client = new NamedPipeClientStream("ServiceOutgoing");//add server name
+                    client = new NamedPipeClientStream(serverName, "ServiceOutgoing");//add server name
                     client.Connect(30);
                     output = new StreamWriter(client);
 
@@ -66,16 +96,47 @@ namespace TriviaGameAdmin
                 }
             }
         }
+
+        /*
+        *METHOD		    :	getUserName
+        *
+        *DESCRIPTION	:	Getter for userName
+        *
+        *PARAMETERS		:	void
+        * 
+        *RETURNS		:	string userName
+        *
+        */
         public string getUserName()
         {
             return userName;
         }
 
+        /*
+        *METHOD		    :	getServerName
+        *
+        *DESCRIPTION	:	Getter for serverName
+        *
+        *PARAMETERS		:	void
+        * 
+        *RETURNS		:	string serverName
+        *
+        */
         public string getServerName()
         {
             return serverName;
         }
 
+        /*
+        *METHOD		    :	getPipeName
+        *
+        *DESCRIPTION	:	Getter for pipeName
+        *
+        *PARAMETERS		:	void
+        * 
+        *RETURNS		:	string pipeName
+        *
+        */
         public string getPipeName()
         {
             return pipeName;

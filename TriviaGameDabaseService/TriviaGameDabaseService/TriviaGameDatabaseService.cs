@@ -1,4 +1,16 @@
-﻿using System;
+﻿/*
+* FILE   : TriviaGameDatabaseService.cs
+* PROJECT  : PROG2120 - Windows and Mobile Programing - PROG 2110 Relation Database - Trivia Game 
+* PROGRAMMER : Brandon Davies - Lauren Machan
+* FIRST VERSION : 2015-11-27
+* DESCRIPTION : This is the main class for the service
+ *              It monitors the pipe for all incomming connections
+ *              when one comes it, it gives thew client a pipe name to connect to
+ *              then starts a thread to monitor that connection
+ *              When a message comes in to that thread, it gets needed data from database and responds
+*/
+
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -295,7 +307,7 @@ namespace TriviaGameDabaseService
                         {
                             dal.OpenConnection();
                             dal.StoreUserName(userName);
-                            dal.InitializeUserInLeaderboard(userName, 1); //set user to active
+                            dal.InitializeUserInLeaderboard(userName, 1);
                             dal.CloseConnection();
                         }
                     }

@@ -1,4 +1,15 @@
-﻿using System;
+﻿/*
+* FILE   : MainWindow.cs
+* PROJECT  : PROG2120 - Windows and Mobile Programing - PROG 2110 Relation Database - Trivia Game 
+* PROGRAMMER : Brandon Davies - Lauren Machan
+* FIRST VERSION : 2015-11-27
+* DESCRIPTION : This is a form is the main window for the user
+ *              The main function is to alow the user to select what option they would like to use as the admin
+ *              the Edit Questions, Current Status and Leaderboard options launch a new form
+ *              the ExportExcel option creates a excel sheet
+*/
+
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -19,6 +30,19 @@ namespace TriviaGameAdmin
         StreamReader input;
         StreamWriter output;
 
+        /*
+        *METHOD		    :	MainWindow
+        *
+        *DESCRIPTION	:	Constructor for the Edit Question form/class
+         *                  start the connection to the service
+        *
+        *PARAMETERS		:	string userName     string user entered as thier name
+         *                  string serverName   string the user entered as the servers computer name
+         *                  string pipeName     the name of the pipe the server told the ProgramStart from to connect to
+        *  
+        *RETURNS		:	
+        *
+        */
         public MainWindow(string userName, string serverName, string pipeName)
         {
             InitializeComponent();
@@ -30,7 +54,7 @@ namespace TriviaGameAdmin
             ps.AddAccessRule(par);
 
             //connect to service
-            client = new NamedPipeClientStream(pipeName + "service");//naming convention for pipe is given name(pipeName) and who has the server (service or user)
+            client = new NamedPipeClientStream(serverName, pipeName + "service");//naming convention for pipe is given name(pipeName) and who has the server (service or user)
             client.Connect(30);
             output = new StreamWriter(client);
 
@@ -38,23 +62,59 @@ namespace TriviaGameAdmin
             output.WriteLine(Environment.MachineName);
             output.Flush();
 
-            server = new NamedPipeServerStream(pipeName + "User");//naming convention for pipe is given name(pipeName) and who has the server (service or user)
+            server = new NamedPipeServerStream(pipeName + "User", PipeDirection.InOut, 1, PipeTransmissionMode.Byte, PipeOptions.Asynchronous, 5000, 5000, ps);//naming convention for pipe is given name(pipeName) and who has the server (service or user)
             server.WaitForConnection();
             input = new StreamReader(server);
         }
 
+        /*
+        *METHOD		    :	btn_EditQuestion_Click
+        *
+        *DESCRIPTION	:	This method is called when the Edit Question button is clicked.
+         *                  It opens the form for editing equestions
+        *
+        *PARAMETERS		:	object sender:  Object relaying information on where the event call came from
+        *                   EventArgs e:    Object that contains data about the event
+        *  
+        *RETURNS		:	void
+        *
+        */
         private void btn_EditQuestion_Click(object sender, EventArgs e)
         {
             EditQuestions edit = new EditQuestions(input, output);
             edit.Show();
         }
 
+        /*
+        *METHOD		    :	btn_CurrentStatus_Click
+        *
+        *DESCRIPTION	:	This method is called when the Current Status button is clicked.
+         *                  It opens the form for the current status
+        *
+        *PARAMETERS		:	object sender:  Object relaying information on where the event call came from
+        *                   EventArgs e:    Object that contains data about the event
+        *  
+        *RETURNS		:	void
+        *
+        */
         private void btn_CurrentStatus_Click(object sender, EventArgs e)
         {
             CurrentStatus status = new CurrentStatus(input, output);
             status.Show();
         }
 
+        /*
+        *METHOD		    :	btn_Leaderboard_Click
+        *
+        *DESCRIPTION	:	This method is called when the Leaderboard button is clicked.
+         *                  It opens the form for the leaderboard
+        *
+        *PARAMETERS		:	object sender:  Object relaying information on where the event call came from
+        *                   EventArgs e:    Object that contains data about the event
+        *  
+        *RETURNS		:	void
+        *
+        */
         private void btn_Leaderboard_Click(object sender, EventArgs e)
         {
             Leaderboard leaders = new Leaderboard(input, output);

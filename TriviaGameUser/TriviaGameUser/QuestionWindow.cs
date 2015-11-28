@@ -1,4 +1,15 @@
-﻿using System;
+﻿/*
+* FILE   : QuestionWindow.cs
+* PROJECT  : PROG2120 - Windows and Mobile Programing - PROG 2110 Relation Database - Trivia Game 
+* PROGRAMMER : Brandon Davies - Lauren Machan
+* FIRST VERSION : 2015-11-27
+* DESCRIPTION : This is a form is the main window for the user
+ *              The main function is to alow the user to guess the answers of the trivia questions
+ *              It gets the next question for the user each time a answer is submitted
+ *              When the game ends it shows the user: Thier score, the correct answer and the leaderboard
+*/
+
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -55,6 +66,12 @@ namespace TriviaGameUser
             this.pipeName = pipeName;
 
             answers = new string[4];
+
+            PipeSecurity ps = new PipeSecurity();
+            System.Security.Principal.SecurityIdentifier sid = new System.Security.Principal.SecurityIdentifier(System.Security.Principal.WellKnownSidType.WorldSid, null);
+            PipeAccessRule par = new PipeAccessRule(sid, PipeAccessRights.ReadWrite, System.Security.AccessControl.AccessControlType.Allow);
+            ps.AddAccessRule(par);
+
             questionNumber = 1;
             answers[0] = "";
             answers[1] = "";
@@ -67,7 +84,7 @@ namespace TriviaGameUser
             timer.Interval = 1000;
 
             //connect to service
-            client = new NamedPipeClientStream(pipeName + "service");//naming convention for pipe is given name(pipeName) and who has the server (service or user)
+            client = new NamedPipeClientStream(serverName, pipeName + "service");//naming convention for pipe is given name(pipeName) and who has the server (service or user)
             client.Connect(30);
             output = new StreamWriter(client);
 
@@ -75,7 +92,7 @@ namespace TriviaGameUser
             output.WriteLine(Environment.MachineName);
             output.Flush();
 
-            server = new NamedPipeServerStream(pipeName + "User");//naming convention for pipe is given name(pipeName) and who has the server (service or user)
+            server = new NamedPipeServerStream(pipeName + "User", PipeDirection.InOut, 1, PipeTransmissionMode.Byte, PipeOptions.Asynchronous, 5000, 5000, ps);//naming convention for pipe is given name(pipeName) and who has the server (service or user)
             server.WaitForConnection();
             input = new StreamReader(server);
 
@@ -306,26 +323,81 @@ namespace TriviaGameUser
             }
         }
 
+        /*
+        *METHOD		    :	lbl_answer1_Click
+        *
+        *DESCRIPTION	:	used to set the radio button to selected if the user clicks on a answers text
+        *
+        *PARAMETERS		:	object sender:  Opject relaying information on where the even call came from
+        *                   EventArgs e:    Object that contains data about the event
+        *  
+        *RETURNS		:	void
+        *
+        */
         private void lbl_answer1_Click(object sender, EventArgs e)
         {
             rad_Answer1.PerformClick();
         }
 
+        /*
+        *METHOD		    :	lbl_answer2_Click
+        *
+        *DESCRIPTION	:	used to set the radio button to selected if the user clicks on a answers text
+        *
+        *PARAMETERS		:	object sender:  Opject relaying information on where the even call came from
+        *                   EventArgs e:    Object that contains data about the event
+        *  
+        *RETURNS		:	void
+        *
+        */
         private void lbl_answer2_Click(object sender, EventArgs e)
         {
             rad_Answer2.PerformClick();
         }
 
+        /*
+        *METHOD		    :	lbl_answer3_Click
+        *
+        *DESCRIPTION	:	used to set the radio button to selected if the user clicks on a answers text
+        *
+        *PARAMETERS		:	object sender:  Opject relaying information on where the even call came from
+        *                   EventArgs e:    Object that contains data about the event
+        *  
+        *RETURNS		:	void
+        *
+        */
         private void lbl_answer3_Click(object sender, EventArgs e)
         {
             rad_Answer3.PerformClick();
         }
 
+        /*
+        *METHOD		    :	lbl_answer4_Click
+        *
+        *DESCRIPTION	:	used to set the radio button to selected if the user clicks on a answers text
+        *
+        *PARAMETERS		:	object sender:  Opject relaying information on where the even call came from
+        *                   EventArgs e:    Object that contains data about the event
+        *  
+        *RETURNS		:	void
+        *
+        */
         private void lbl_answer4_Click(object sender, EventArgs e)
         {
             rad_Answer4.PerformClick();
         }
 
+        /*
+        *METHOD		    :	QuestionWindow_FormClosing
+        *
+        *DESCRIPTION	:	used to tell the service the user left
+        *
+        *PARAMETERS		:	object sender:  Opject relaying information on where the even call came from
+        *                   EventArgs e:    Object that contains data about the event
+        *  
+        *RETURNS		:	void
+        *
+        */
         private void QuestionWindow_FormClosing(object sender, FormClosingEventArgs e)
         {
             output.WriteLine("Quit.");

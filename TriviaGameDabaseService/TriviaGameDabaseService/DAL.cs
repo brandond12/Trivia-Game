@@ -1,4 +1,12 @@
-﻿using System;
+﻿/*
+* FILE   : DAL.cs
+* PROJECT  : PROG2120 - Windows and Mobile Programing - PROG 2110 Relation Database - Trivia Game 
+* PROGRAMMER : Brandon Davies - Lauren Machan
+* FIRST VERSION : 2015-11-27
+* DESCRIPTION : This class is the Data Access Layer for the service to communicate with the database
+*/
+
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Data;
@@ -371,6 +379,7 @@ namespace TriviaGameDabaseService
                     //create the command, and execute the command
                     MySqlCommand myCommand = new MySqlCommand(answerQuery, sqlConnection);
                     myCommand.ExecuteNonQuery();
+                    Logger.Log("User Answer : " + "gameNumber " + gameNumber + ", userName " + userName + ", gameQuestion " + gameQuestion + ", userAnswer " + userAnswer + ", answerScore " + answerScore);
                 }
                 //write to the log if the connection is closed
                 else
@@ -440,7 +449,7 @@ namespace TriviaGameDabaseService
                 if (sqlConnection.State == ConnectionState.Open)
                 {
                     //set a query that will retrieve the leaderboard, and create the command
-                    String leaderboardQuery = "SELECT Name, GameScore FROM UserGames WHERE GameNumber=" + gameNumber + " ORDER BY GameScore DESC;";
+                    String leaderboardQuery = "SELECT Name, GameScore FROM UserGames WHERE GameNumber = " + gameNumber + " ORDER BY GameScore DESC;";
                     MySqlCommand myCommand = new MySqlCommand(leaderboardQuery, sqlConnection);
 
                     //create a data reader to read users and their scores
@@ -589,16 +598,36 @@ namespace TriviaGameDabaseService
             return correctAnswer;
         }
 
+        /*
+        *METHOD		    :	UpdateQuestionAndAnswer
+        *
+        *DESCRIPTION	:	Used to change a questons: question, answers and correct answer
+        *
+        *PARAMETERS		:	int questionNumber      The question to update
+         *                  String question         The trivia question for the user
+         *                  String answer1          A answer to be saved
+         *                  String answer2          A answer to be saved
+         *                  String answer3          A answer to be saved
+         *                  String answer4          A answer to be saved
+         *                  int correctAnswer       which answer is correct (1, 2, 3 or 4)
+        *  
+        *RETURNS		:	void
+        *
+        */
         public void UpdateQuestionAndAnswer(int questionNumber, String question, String answer1, String answer2, String answer3, String answer4, int correctAnswer)
         {
-            String currentScoreQuery = "";
+            String updateQuestionQuery = "";
             try
             {
+                //check connection is open
                 if (sqlConnection.State == ConnectionState.Open)
                 {
                     MySqlCommand myCommand = new MySqlCommand();
 
-                    currentScoreQuery =
+                    //build query string
+                    //delete all old question data
+                    //add new question
+                    updateQuestionQuery =
                         "DELETE FROM UserAnswer; " +
                         "DELETE FROM UserGames; " +
                         "DELETE FROM Users; " +
@@ -606,48 +635,45 @@ namespace TriviaGameDabaseService
                         "DELETE FROM TestQuestions WHERE QuestionNumber = " + questionNumber + "; " +
                         "INSERT INTO TestQuestions (QuestionNumber, Question) VALUES (" + questionNumber + ", '" + question + "'); ";
 
+                    //add answers
+                    //write group of answers based on which answer is right
                     if (correctAnswer == 1)
                     {
-                        currentScoreQuery += "INSERT INTO TestAnswers (QuestionNumber, Answer, IsCorrect) VALUES (" + questionNumber + ", '" + answer1 + "', TRUE); ";
-                        currentScoreQuery += "INSERT INTO TestAnswers (QuestionNumber, Answer, IsCorrect) VALUES (" + questionNumber + ", '" + answer2 + "', FALSE); ";
-                        currentScoreQuery += "INSERT INTO TestAnswers (QuestionNumber, Answer, IsCorrect) VALUES (" + questionNumber + ", '" + answer3 + "', FALSE); ";
-                        currentScoreQuery += "INSERT INTO TestAnswers (QuestionNumber, Answer, IsCorrect) VALUES (" + questionNumber + ", '" + answer4 + "', FALSE); ";
+                        updateQuestionQuery += "INSERT INTO TestAnswers (QuestionNumber, Answer, IsCorrect) VALUES (" + questionNumber + ", '" + answer1 + "', TRUE); ";
+                        updateQuestionQuery += "INSERT INTO TestAnswers (QuestionNumber, Answer, IsCorrect) VALUES (" + questionNumber + ", '" + answer2 + "', FALSE); ";
+                        updateQuestionQuery += "INSERT INTO TestAnswers (QuestionNumber, Answer, IsCorrect) VALUES (" + questionNumber + ", '" + answer3 + "', FALSE); ";
+                        updateQuestionQuery += "INSERT INTO TestAnswers (QuestionNumber, Answer, IsCorrect) VALUES (" + questionNumber + ", '" + answer4 + "', FALSE); ";
                     }
 
                     else if (correctAnswer == 2)
                     {
-                        currentScoreQuery += "INSERT INTO TestAnswers (QuestionNumber, Answer, IsCorrect) VALUES (" + questionNumber + ", '" + answer1 + "', FALSE); ";
-                        currentScoreQuery += "INSERT INTO TestAnswers (QuestionNumber, Answer, IsCorrect) VALUES (" + questionNumber + ", '" + answer2 + "', TRUE); ";
-                        currentScoreQuery += "INSERT INTO TestAnswers (QuestionNumber, Answer, IsCorrect) VALUES (" + questionNumber + ", '" + answer3 + "', FALSE); ";
-                        currentScoreQuery += "INSERT INTO TestAnswers (QuestionNumber, Answer, IsCorrect) VALUES (" + questionNumber + ", '" + answer4 + "', FALSE); ";
+                        updateQuestionQuery += "INSERT INTO TestAnswers (QuestionNumber, Answer, IsCorrect) VALUES (" + questionNumber + ", '" + answer1 + "', FALSE); ";
+                        updateQuestionQuery += "INSERT INTO TestAnswers (QuestionNumber, Answer, IsCorrect) VALUES (" + questionNumber + ", '" + answer2 + "', TRUE); ";
+                        updateQuestionQuery += "INSERT INTO TestAnswers (QuestionNumber, Answer, IsCorrect) VALUES (" + questionNumber + ", '" + answer3 + "', FALSE); ";
+                        updateQuestionQuery += "INSERT INTO TestAnswers (QuestionNumber, Answer, IsCorrect) VALUES (" + questionNumber + ", '" + answer4 + "', FALSE); ";
                     }
 
                     else if (correctAnswer == 3)
                     {
-                        currentScoreQuery += "INSERT INTO TestAnswers (QuestionNumber, Answer, IsCorrect) VALUES (" + questionNumber + ", '" + answer1 + "', FALSE); ";
-                        currentScoreQuery += "INSERT INTO TestAnswers (QuestionNumber, Answer, IsCorrect) VALUES (" + questionNumber + ", '" + answer2 + "', FALSE); ";
-                        currentScoreQuery += "INSERT INTO TestAnswers (QuestionNumber, Answer, IsCorrect) VALUES (" + questionNumber + ", '" + answer3 + "', TRUE); ";
-                        currentScoreQuery += "INSERT INTO TestAnswers (QuestionNumber, Answer, IsCorrect) VALUES (" + questionNumber + ", '" + answer4 + "', FALSE); ";
+                        updateQuestionQuery += "INSERT INTO TestAnswers (QuestionNumber, Answer, IsCorrect) VALUES (" + questionNumber + ", '" + answer1 + "', FALSE); ";
+                        updateQuestionQuery += "INSERT INTO TestAnswers (QuestionNumber, Answer, IsCorrect) VALUES (" + questionNumber + ", '" + answer2 + "', FALSE); ";
+                        updateQuestionQuery += "INSERT INTO TestAnswers (QuestionNumber, Answer, IsCorrect) VALUES (" + questionNumber + ", '" + answer3 + "', TRUE); ";
+                        updateQuestionQuery += "INSERT INTO TestAnswers (QuestionNumber, Answer, IsCorrect) VALUES (" + questionNumber + ", '" + answer4 + "', FALSE); ";
                     }
+
                     else
                     {
-                        currentScoreQuery += "INSERT INTO TestAnswers (QuestionNumber, Answer, IsCorrect) VALUES (" + questionNumber + ", '" + answer1 + "', FALSE); ";
-                        currentScoreQuery += "INSERT INTO TestAnswers (QuestionNumber, Answer, IsCorrect) VALUES (" + questionNumber + ", '" + answer2 + "', FALSE); ";
-                        currentScoreQuery += "INSERT INTO TestAnswers (QuestionNumber, Answer, IsCorrect) VALUES (" + questionNumber + ", '" + answer3 + "', FALSE); ";
-                        currentScoreQuery += "INSERT INTO TestAnswers (QuestionNumber, Answer, IsCorrect) VALUES (" + questionNumber + ", '" + answer4 + "', TRUE); ";
+                        updateQuestionQuery += "INSERT INTO TestAnswers (QuestionNumber, Answer, IsCorrect) VALUES (" + questionNumber + ", '" + answer1 + "', FALSE); ";
+                        updateQuestionQuery += "INSERT INTO TestAnswers (QuestionNumber, Answer, IsCorrect) VALUES (" + questionNumber + ", '" + answer2 + "', FALSE); ";
+                        updateQuestionQuery += "INSERT INTO TestAnswers (QuestionNumber, Answer, IsCorrect) VALUES (" + questionNumber + ", '" + answer3 + "', FALSE); ";
+                        updateQuestionQuery += "INSERT INTO TestAnswers (QuestionNumber, Answer, IsCorrect) VALUES (" + questionNumber + ", '" + answer4 + "', TRUE); ";
                     }
 
-                    Logger.Log("Created query: " + currentScoreQuery);
-                    try
-                    {
-                        myCommand = new MySqlCommand(currentScoreQuery, sqlConnection);
+                    Logger.Log("Created query: " + updateQuestionQuery);
 
-                        myCommand.ExecuteNonQuery();
-                    }
-                    catch(Exception)
-                    {
-                        Logger.Log("Error: MySql failed");
-                    }
+                    //execute command
+                    myCommand = new MySqlCommand(updateQuestionQuery, sqlConnection);
+                    myCommand.ExecuteNonQuery();
                 }
                 else
                 {
@@ -656,7 +682,7 @@ namespace TriviaGameDabaseService
             }
             catch (Exception ex)
             {
-                Logger.Log("Exception: " + ex.Message + currentScoreQuery);
+                Logger.Log("Exception: " + ex.Message + updateQuestionQuery);
             }
         }
 

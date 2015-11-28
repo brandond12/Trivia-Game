@@ -1,4 +1,13 @@
-﻿using System;
+﻿/*
+* FILE   : Answers.cs
+* PROJECT  : PROG2120 - Windows and Mobile Programing - PROG 2110 Relation Database - Trivia Game 
+* PROGRAMMER : Brandon Davies - Lauren Machan
+* FIRST VERSION : 2015-11-27
+* DESCRIPTION : This is a form gets the questions and answer
+ *              then displays the question and correct answer to the user one by one
+*/
+
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -17,12 +26,26 @@ namespace TriviaGameUser
         int questionNumber;
         StreamReader input;
         StreamWriter output;
+
+        /*
+        *METHOD		    :	Answers
+        *
+        *DESCRIPTION	:	Constructor for the Answers status form/class
+         *                  Gets the Answers from the service and displays it to the form
+        *
+        *PARAMETERS		:	StreamReader input          reader that reads in data from the service
+         *                  StreamWriter output         writer that will write to the service
+        *  
+        *RETURNS		:	
+        *
+        */
         public Answers(StreamReader input, StreamWriter output)
         {
             InitializeComponent();
             questionNumber = 1;
             this.input = input;
             this.output = output;
+            //trigger next button to load the first questions data intothe form
             btn_Next_Click(new object(), new EventArgs());
         }
 
@@ -94,6 +117,7 @@ namespace TriviaGameUser
                     btn_Next.Text = "Close";
                 }
             }
+            //add a small delay so if user clicks very fast, service isnt overwhelmed
             Thread.Sleep(200);
         }
     }
